@@ -47,7 +47,6 @@ interface ShowDetailsProps {
 }
 
 export default function ShowDetails({ show }: ShowDetailsProps) {
-  console.log("showsDetails", show);
   const groupedVideos = useMemo(() => {
     return _.groupBy(show?.videos, "season");
   }, [show?.videos]);

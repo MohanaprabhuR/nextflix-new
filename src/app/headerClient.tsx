@@ -45,9 +45,8 @@ export default function HeaderClient({
     );
   }
 
-  console.log("genres", data?.genres?.data);
   return (
-    <header className="pt-4 pb-5 fixed top-0 z-50 w-full transition-all ease-in-out">
+    <header className="pt-4 pb-5 fixed top-0 z-50 w-full transition-all ease-in-out bg-white">
       <div className="w-full max-w-[1332px] mx-auto px-4  flex items-center justify-between">
         <div className="flex items-center gap-5">
           <Link href="/">
@@ -72,7 +71,7 @@ export default function HeaderClient({
                   key={genre.id}
                   className="text-[rgba(0,0,0,0.43)] text-sm font-normal leading-[100%] tracking-[0.14px]"
                 >
-                  {genre.name}
+                  <Link href={`/genres/${genre.id}`}>{genre.name}</Link>
                 </li>
               ))}
             </ul>
