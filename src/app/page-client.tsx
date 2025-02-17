@@ -8,7 +8,7 @@ import { fetchAllData } from "@/utils/fetchData";
 interface Show {
   id: number;
   title: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface Genre {
