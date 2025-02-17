@@ -1,8 +1,8 @@
 import React from "react";
-import CarousalCard from "./carousalCard";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { blurhashToBase64 } from "blurhash-base64";
+import Link from "next/link";
 
 interface Show {
   description: string;
@@ -30,7 +30,11 @@ const showCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container flex gap-[0_32px]">
             {shows?.map((show) => (
-              <div key={show.id} className="embla__slide">
+              <Link
+                href={`/shows/${show.id}`}
+                key={show.id}
+                className="embla__slide"
+              >
                 <figure className="size-full min-w-[200px]">
                   <Image
                     src={show?.poster?.src}
@@ -40,7 +44,7 @@ const showCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
                     blurDataURL={blurhashToBase64(show?.poster?.hash)}
                   />
                 </figure>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

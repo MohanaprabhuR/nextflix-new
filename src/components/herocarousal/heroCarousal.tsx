@@ -5,6 +5,7 @@ import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 import Image from "next/image";
 import { blurhashToBase64 } from "blurhash-base64";
+import Link from "next/link";
 
 interface Show {
   description: string;
@@ -83,9 +84,10 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
         <div ref={emblaRef} className="overflow-hidden embla-viewport">
           <div className="flex">
             {shows?.map((show, index) => (
-              <div
-                className="relative flex-[0_0_100%] min-w-0"
-                key={show.id || index}
+              <Link
+                href={`/shows/${show.id}`}
+                key={show.id}
+                className="embla__slide relative flex-[0_0_100%] min-w-0"
               >
                 <figure className="size-full">
                   <Image
@@ -116,12 +118,12 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
                     <p className="text-white text-sm font-normal leading-[150%] tracking-[0.14px] pb-4">
                       {show?.description}
                     </p>
-                    <button className="bg-white outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[30px] py-3">
+                    <button className="hover:-translate-y-[2px] transition-all delay-300 ease-in-out bg-white outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[30px] py-3">
                       Watch Now
                     </button>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

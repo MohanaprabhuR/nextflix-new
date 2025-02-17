@@ -3,7 +3,7 @@ import React from "react";
 
 const header = () => {
   return (
-    <header className="pt-4 pb-5">
+    <header className="pt-4 pb-5 fixed top-0 z-50 w-full transition-all ease-in-out">
       <div className="w-full max-w-[1332px] mx-auto px-4  flex items-center justify-between">
         <Link href="/">
           <figure className="w-5 h-5">
