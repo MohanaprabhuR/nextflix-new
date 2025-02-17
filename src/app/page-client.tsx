@@ -46,8 +46,6 @@ export default function HomeClient({
     );
   }
 
-  console.log(data?.shows?.data);
-
   return (
     <div>
       <HeroCarousal shows={data?.shows?.data} />
