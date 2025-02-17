@@ -19,7 +19,8 @@ interface ShowCarousalProps {
   shows: Show[];
   title: string;
 }
-const showCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
+
+const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
   const [emblaRef] = useEmblaCarousel();
   return (
     <div className="w-full max-w-[1332px] mx-auto px-4 pt-20">
@@ -53,4 +54,4 @@ const showCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
   );
 };
 
-export default showCarousal;
+export default ShowCarousal;
