@@ -99,7 +99,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                           key={genre.id}
                           className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer"
                         >
-                          {genre.name}
+                          {genre?.name}
                         </li>
                       ))}
                     </ul>

@@ -69,7 +69,7 @@ export default function HeaderClient({
               {data?.genres?.data.map((genre) => (
                 <li
                   key={genre.id}
-                  className="text-[rgba(0,0,0,0.43)] text-sm font-normal leading-[100%] tracking-[0.14px]"
+                  className="text-[rgba(0,0,0,0.43)] text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200 hover:text-black"
                 >
                   <Link href={`/genres/${genre.id}`}>{genre.name}</Link>
                 </li>

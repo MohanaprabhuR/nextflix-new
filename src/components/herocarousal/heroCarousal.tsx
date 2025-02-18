@@ -31,6 +31,7 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
+  console.log("scrollSnaps", shows);
   const autoplayOptions = {
     delay: 3000,
     rootNode: (emblaRoot: HTMLElement | null) =>
@@ -81,7 +82,7 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
       <div className="relative embla rounded-2xl overflow-hidden">
         <div ref={emblaRef} className="overflow-hidden embla-viewport">
           <div className="flex">
-            {shows.map((show) => (
+            {shows?.map((show) => (
               <Link
                 href={`/shows/${show.id}`}
                 key={show.id}
