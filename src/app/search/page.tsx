@@ -5,12 +5,11 @@ export default async function Home() {
     fetch(`${process.env.API_URL}/api/shows?populate=*`, {}),
   ]);
 
-  const [shows] = await Promise.all([
-    showsResponse.json(),
-  ]);
+  const [shows] = await Promise.all([showsResponse.json()]);
 
-  if (!showsResponse.ok ) {
+  if (!showsResponse.ok) {
     throw new Error("Failed to fetch data");
   }
 
   return <SearchClient initialData={{ shows }} />;
+}

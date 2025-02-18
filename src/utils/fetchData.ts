@@ -2,29 +2,25 @@ export const fetchShows = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/shows?populate=*`
   );
-  return response.json();
+  if (!response.ok) throw new Error("Failed to fetch genre");
+  const shows = await response.json();
+  return shows;
 };
 
 export const fetchGenres = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/genres?populate=*`
   );
-  return response.json();
+  if (!response.ok) throw new Error("Failed to fetch genre");
+  const genres = await response.json();
+  return genres;
 };
 
 export async function fetchGenreData(id: string) {
-  const res = await fetch(
+  const genre = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/genres/${id}?populate=*`
   );
-  if (!res.ok) throw new Error("Failed to fetch genre");
-  const data = await res.json();
+  if (!genre.ok) throw new Error("Failed to fetch genre");
+  const data = await genre.json();
   return data;
 }
-
-export const fetchAllData = async () => {
-  const [showsData, genresData] = await Promise.all([
-    fetchShows(),
-    fetchGenres(),
-  ]);
-  return { shows: showsData, genres: genresData };
-};

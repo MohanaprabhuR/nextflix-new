@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllData } from "@/utils/fetchData";
+import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
 import React from "react";
 
@@ -28,7 +28,7 @@ export default function HeaderClient({
 }) {
   const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres"],
-    queryFn: fetchAllData,
+    queryFn: fetchGenres,
     staleTime: 5 * 1000,
     initialData,
   });

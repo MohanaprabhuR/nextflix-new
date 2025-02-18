@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllData } from "@/utils/fetchData";
+import { fetchShows } from "@/utils/fetchData";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -24,7 +24,7 @@ export default function SearchClient({
 }) {
   const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres"],
-    queryFn: fetchAllData,
+    queryFn: fetchShows,
     staleTime: 5 * 1000,
     initialData,
   });

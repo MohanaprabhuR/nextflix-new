@@ -3,7 +3,7 @@
 import HeroCarousal from "@/components/herocarousal/heroCarousal";
 import Showcarousal from "@/components/showcarousal/showCarousal";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllData } from "@/utils/fetchData";
+import { fetchShows, fetchGenres } from "@/utils/fetchData";
 
 interface Show {
   id: number;
@@ -29,8 +29,11 @@ export default function HomeClient({
 }) {
   const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres"],
-    queryFn: fetchAllData,
-    staleTime: 5 * 1000,
+    queryFn: async (): Promise<ApiResponse> => {
+      const [shows, genres] = await Promise.all([fetchShows(), fetchGenres()]);
+      return { shows, genres };
+    },
+    staleTime: 5000,
     initialData,
   });
 

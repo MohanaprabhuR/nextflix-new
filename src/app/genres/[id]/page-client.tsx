@@ -4,10 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { fetchAllData, fetchGenreData } from "@/utils/fetchData";
+import { fetchGenreData, fetchShows } from "@/utils/fetchData";
 
 interface Show {
-  name: ReactNode;
   id: number;
   title: string;
   release_year: number;
@@ -22,7 +21,7 @@ interface Genre {
 
 interface ApiResponse {
   shows: { data: Show[] };
-  genres: { data: Genre };
+  genres: { data: Genre[] };
 }
 
 export default function CategoryClient({
@@ -37,9 +36,9 @@ export default function CategoryClient({
     queryFn: async (): Promise<ApiResponse> => {
       const [genreData, allData] = await Promise.all([
         fetchGenreData(id),
-        fetchAllData(),
+        fetchShows(),
       ]);
-      return { shows: allData, genres: genreData };
+      return { genres: genreData, shows: allData };
     },
     initialData,
     staleTime: 5000,
@@ -52,12 +51,12 @@ export default function CategoryClient({
   return (
     <div className="w-full max-w-[1332px] mx-auto px-4 pt-6">
       <h2 className="text-black text-2xl font-semibold leading-[115%]">
-        {data?.genres?.data?.name}
+        {data?.genres?.data?.name || "Unknown Genre"}
       </h2>
 
       <div className="flex flex-wrap gap-16 pt-6">
         {data?.genres?.data?.shows?.map((show: Show) => {
-          const matchedShow = data?.shows?.data.find((s) => s.id === show.id);
+          const matchedShow = data?.shows?.data?.find((s) => s.id === show.id);
 
           return matchedShow ? (
             <div key={matchedShow.id} className="w-full max-w-[200px]">
