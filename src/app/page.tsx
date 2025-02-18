@@ -11,5 +11,9 @@ export default async function Home() {
     genresResponse.json(),
   ]);
 
+  if (!showsResponse.ok || !genresResponse.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
   return <HomeClient initialData={{ shows, genres }} />;
 }

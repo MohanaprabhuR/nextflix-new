@@ -38,7 +38,9 @@ const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
               >
                 <figure className="size-full min-w-[200px]">
                   <Image
-                    src={show?.poster?.src}
+                    src={
+                      show?.poster?.src || "/video-poster-placeholder-image.jpg"
+                    }
                     alt="poster"
                     width={200}
                     height={300}

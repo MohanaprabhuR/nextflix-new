@@ -77,7 +77,7 @@ export default function ShowModal({ show }: ShowModalProps) {
         <DialogDescription className="p-0 m-0">
           <div className="relative">
             <Image
-              src={show?.banner?.src || "/default-banner.jpg"}
+              src={show?.banner?.src || "/video-poster-placeholder-image.jpg"}
               alt={show?.name}
               width={1920}
               height={500}
