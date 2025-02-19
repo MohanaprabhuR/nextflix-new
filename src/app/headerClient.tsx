@@ -4,20 +4,12 @@ import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
 import React from "react";
 
-interface Show {
-  id: number;
-  title: string;
-  [key: string]: unknown;
-}
-
 interface Genre {
   id: number;
   name: string;
-  shows: Show[];
 }
 
 interface ApiResponse {
-  shows: { data: Show[] };
   genres: { data: Genre[] };
 }
 

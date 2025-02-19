@@ -92,7 +92,7 @@ export default function SearchClient({
                   className="w-full max-w-[200px] shadow-md"
                 />
               </Link>
-              <div className="pt-4 flex flex-col gap-2">
+              <div className="pt-4 flex flex-col gap-[0_9px]">
                 <h5 className="text-gray-500 text-sm font-normal">
                   {show.release_year ?? "Unknown Year"}
                 </h5>
