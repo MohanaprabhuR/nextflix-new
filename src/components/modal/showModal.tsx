@@ -131,7 +131,7 @@ export default function ShowModal({ show }: ShowModalProps) {
               </div>
             </div>
           </div>
-          <div className="seasons pt-[60px]  max-w-[1008px] w-full">
+          <div className="seasons pt-[60px]  max-w-[1008px] w-full relative">
             {seasons.length > 1 ? (
               <div className="px-10">
                 <nav className="flex gap-[0_20px]" aria-label="Seasons ">
@@ -209,6 +209,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                 ))}
               </ul>
             </div>
+            <div className="w-8 h-[382px] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute right-0 bottom-0"></div>
           </div>
           <div className="pt-20 px-10 flex flex-col gap-4 w-full max-w-[608px]">
             <h2 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px]">

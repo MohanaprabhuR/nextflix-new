@@ -33,18 +33,25 @@ const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
               <Link
                 href={`/shows/${show.id}`}
                 key={show.id}
-                className="embla__slide shadow-[0px_10px_20px_-6px_rgba(255,173,209,0.58)]"
+                className="embla__slide"
               >
                 <figure className="size-full min-w-[200px]">
-                  <PosterImage
-                    src={
-                      show?.poster?.src || "/video-poster-placeholder-image.jpg"
-                    }
-                    alt={show?.name}
-                    hash={show?.poster?.hash}
-                    width={200}
-                    height={300}
-                  />
+                  <div className="relative">
+                    <PosterImage
+                      src={
+                        show?.poster?.src ||
+                        "/video-poster-placeholder-image.jpg"
+                      }
+                      alt={show?.name}
+                      hash={show?.poster?.hash}
+                      width={200}
+                      height={300}
+                    />
+                    <div
+                      style={{ backgroundImage: `url(${show?.poster?.src})` }}
+                      className="absolute w-[200px] h-full bg-cover bg-center blur-[12px] z-[-1] opacity-50 pointer-events-none left-0 top-0"
+                    ></div>
+                  </div>
                 </figure>
               </Link>
             ))}

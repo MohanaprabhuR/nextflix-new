@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className="pt-[56px] pb-[84px]">
+      <body className="pt-[60px] pb-[84px]">
         <TanstackProvider>
           <Header />
           {children}
