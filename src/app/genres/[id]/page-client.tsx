@@ -36,7 +36,7 @@ export default function CategoryClient({
     queryFn: async (): Promise<ApiResponse> => {
       try {
         const [shows, genres] = await Promise.all([
-          fetchGenreData(id),
+          fetchGenreData(id as string),
           fetchShows(),
         ]);
         return { shows, genres };
