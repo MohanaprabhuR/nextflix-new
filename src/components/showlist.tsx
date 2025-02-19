@@ -2,7 +2,17 @@ import Link from "next/link";
 import React from "react";
 import PosterImage from "./imageBlurHash";
 
-const showlist = ({ show }: { show: any }) => {
+interface Show {
+  id: string;
+  name: string;
+  release_year: number;
+  poster?: {
+    src?: string;
+    hash?: string;
+  };
+}
+
+const ShowList = ({ show }: { show: Show }) => {
   return (
     <>
       <Link href={`/shows/${show.id}`}>
@@ -24,4 +34,4 @@ const showlist = ({ show }: { show: any }) => {
   );
 };
 
-export default showlist;
+export default ShowList;
