@@ -8,11 +8,15 @@ interface Show {
   release_year: number;
   poster?: {
     src?: string;
-    hash?: string;
+    hash?: string; // Ensure hash is explicitly typed
   };
 }
 
-const ShowList = ({ show }: { show: Show }) => {
+interface ShowListProps {
+  show: Show;
+}
+
+const ShowList: React.FC<ShowListProps> = ({ show }) => {
   return (
     <>
       <Link href={`/shows/${show.id}`}>
@@ -21,7 +25,7 @@ const ShowList = ({ show }: { show: Show }) => {
           alt={show.name}
           width={200}
           height={300}
-          hash={show?.poster?.hash}
+          hash={show.poster?.hash || ""}
         />
       </Link>
       <div className="pt-4 flex flex-col gap-[0_9px]">
