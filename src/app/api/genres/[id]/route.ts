@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const API_URL = process.env.API_URL;
 
+  const id = (await params).id;
+
   try {
-    const response = await fetch(
-      `${API_URL}/api/genres/${params.id}?populate=*`
-    );
+    const response = await fetch(`${API_URL}/api/genres/${id}?populate=*`);
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {

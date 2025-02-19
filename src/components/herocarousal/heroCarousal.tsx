@@ -31,7 +31,6 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  console.log("scrollSnaps", shows);
   const autoplayOptions = {
     delay: 3000,
     rootNode: (emblaRoot: HTMLElement | null) =>
