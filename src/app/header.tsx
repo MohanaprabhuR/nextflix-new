@@ -1,15 +1,11 @@
 import HeaderClient from "./headerClient";
 
 export default async function Home() {
-  const [showsResponse, genresResponse] = await Promise.all([
-    fetch(`${process.env.API_URL}/api/shows?populate=*`, {}),
+  const [genresResponse] = await Promise.all([
     fetch(`${process.env.API_URL}/api/genres?populate=*`, {}),
   ]);
 
-  const [shows, genres] = await Promise.all([
-    showsResponse.json(),
-    genresResponse.json(),
-  ]);
+  const [genres] = await Promise.all([genresResponse.json()]);
 
-  return <HeaderClient initialData={{ shows, genres }} />;
+  return <HeaderClient initialData={{ genres }} />;
 }
