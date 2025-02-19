@@ -30,10 +30,18 @@ export default function HomeClient({
   const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres"],
     queryFn: async (): Promise<ApiResponse> => {
-      const [shows, genres] = await Promise.all([fetchShows(), fetchGenres()]);
-      return { shows, genres };
+      try {
+        const [shows, genres] = await Promise.all([
+          fetchShows(),
+          fetchGenres(),
+        ]);
+        return { shows, genres };
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+        return data ?? initialData;
+      }
     },
-    staleTime: 5000,
+    staleTime: 5 * 60 * 1000,
     initialData,
   });
 

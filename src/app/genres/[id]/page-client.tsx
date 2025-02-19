@@ -8,7 +8,7 @@ import { fetchGenreData, fetchShows } from "@/utils/fetchData";
 
 interface Show {
   id: number;
-  title: string;
+  name: string;
   release_year: number;
   poster?: { src: string };
 }
@@ -31,17 +31,23 @@ export default function CategoryClient({
 }) {
   const { id } = useParams();
 
-  const { data, isLoading, isError, error } = useQuery<ApiResponse>({
+  const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres", id],
     queryFn: async (): Promise<ApiResponse> => {
-      const [genreData, allData] = await Promise.all([
-        fetchGenreData(id),
-        fetchShows(),
-      ]);
-      return { genres: genreData, shows: allData };
+      try {
+        const [shows, genres] = await Promise.all([
+          fetchGenreData(id),
+          fetchShows(),
+        ]);
+        return { shows, genres };
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+        if (initialData) return initialData;
+        throw err;
+      }
     },
+    staleTime: 5 * 60 * 1000,
     initialData,
-    staleTime: 5000,
   });
 
   if (isLoading) return <div className="text-center text-lg">Loading...</div>;

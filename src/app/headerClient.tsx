@@ -28,8 +28,16 @@ export default function HeaderClient({
 }) {
   const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres"],
-    queryFn: fetchGenres,
-    staleTime: 5 * 1000,
+    queryFn: async (): Promise<ApiResponse> => {
+      try {
+        const [genres] = await Promise.all([fetchGenres()]);
+        return genres;
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+        return data ?? initialData;
+      }
+    },
+    staleTime: 5 * 60 * 1000,
     initialData,
   });
 
