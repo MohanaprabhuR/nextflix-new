@@ -10,6 +10,7 @@ interface Show {
   name: string;
   release_year: number;
   poster?: { src: string };
+  src: string;
 }
 
 interface Genre {
@@ -56,7 +57,7 @@ export default function CategoryClient({
   return (
     <div className="w-full max-w-[1332px] mx-auto px-4 pt-6">
       <h2 className="text-black text-2xl font-semibold leading-[115%]">
-        {data?.genres?.data?.name || "Unknown Genre"}
+        {data?.genres?.data?.name}
       </h2>
 
       <div className="flex flex-wrap gap-16 pt-6">
