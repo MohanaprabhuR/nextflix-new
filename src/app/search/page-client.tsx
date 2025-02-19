@@ -2,15 +2,14 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchShows } from "@/utils/fetchData";
-import Link from "next/link";
-import Image from "next/image";
+import Showlist from "@/components/showlist";
 
 interface Show {
   id: number;
   title: string;
   name: string;
   release_year?: string;
-  poster?: { src: string };
+  poster?: { src: string; hash: string };
 }
 
 interface ApiResponse {
@@ -31,7 +30,7 @@ export default function SearchClient({
         return await fetchShows();
       } catch (error) {
         console.error("Failed to fetch data:", error);
-        return initialData; // Use initial data as a fallback
+        return initialData;
       }
     },
     staleTime: 5 * 60 * 1000,
@@ -81,25 +80,7 @@ export default function SearchClient({
         {filteredShows.length > 0 ? (
           filteredShows.map((show) => (
             <div key={show.id}>
-              <Link href={`/shows/${show.id}`}>
-                <Image
-                  src={
-                    show.poster?.src || "/video-poster-placeholder-image.jpg"
-                  }
-                  alt={show.name ?? "Unknown Show"}
-                  width={200}
-                  height={300}
-                  className="w-full max-w-[200px] shadow-md"
-                />
-              </Link>
-              <div className="pt-4 flex flex-col gap-[0_9px]">
-                <h5 className="text-gray-500 text-sm font-normal">
-                  {show.release_year ?? "Unknown Year"}
-                </h5>
-                <h3 className="text-black text-base font-medium">
-                  {show.name ?? "Untitled"}
-                </h3>
-              </div>
+              <Showlist show={show} />
             </div>
           ))
         ) : (

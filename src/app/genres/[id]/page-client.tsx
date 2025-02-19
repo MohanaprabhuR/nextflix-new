@@ -1,8 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import Link from "next/link";
+import Showlist from "@/components/showlist";
 import { useParams } from "next/navigation";
 import { fetchGenreData, fetchShows } from "@/utils/fetchData";
 
@@ -66,26 +65,7 @@ export default function CategoryClient({
 
           return matchedShow ? (
             <div key={matchedShow.id} className="w-full max-w-[200px]">
-              <Link href={`/shows/${matchedShow.id}`}>
-                <Image
-                  src={
-                    matchedShow.poster?.src ||
-                    "/video-poster-placeholder-image.jpg"
-                  }
-                  alt={matchedShow.name}
-                  width={200}
-                  height={300}
-                  className="w-full max-w-[200px] shadow-md"
-                />
-              </Link>
-              <div className="pt-4 flex flex-col gap-2">
-                <h5 className="text-[rgba(0,0,0,0.43)] text-[13px] font-normal leading-[100%] tracking-[0.13px]">
-                  {matchedShow?.release_year}
-                </h5>
-                <h3 className="text-black text-[15px] font-medium leading-[100%] tracking-[0.15px]">
-                  {matchedShow?.name}
-                </h3>
-              </div>
+              <Showlist show={matchedShow} />
             </div>
           ) : null;
         })}

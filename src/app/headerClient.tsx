@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 interface Genre {
@@ -18,6 +19,8 @@ export default function HeaderClient({
 }: {
   initialData: ApiResponse;
 }) {
+  const pathname = usePathname();
+
   const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
     queryKey: ["shows-genres"],
     queryFn: async (): Promise<ApiResponse> => {
@@ -47,7 +50,7 @@ export default function HeaderClient({
 
   return (
     <header className="pt-4 pb-5 fixed top-0 z-50 w-full transition-all ease-in-out bg-white">
-      <div className="w-full max-w-[1332px] mx-auto px-4  flex items-center justify-between">
+      <div className="w-full max-w-[1332px] mx-auto px-4 flex items-center justify-between">
         <div className="flex items-center gap-5">
           <Link href="/">
             <figure className="w-5 h-5">
@@ -66,14 +69,21 @@ export default function HeaderClient({
           </Link>
           <div>
             <ul className="flex items-center gap-4">
-              {data?.genres?.data.map((genre) => (
-                <li
-                  key={genre.id}
-                  className="text-[rgba(0,0,0,0.43)] text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200 hover:text-black"
-                >
-                  <Link href={`/genres/${genre.id}`}>{genre.name}</Link>
-                </li>
-              ))}
+              {data?.genres?.data.map((genre) => {
+                const isActive = pathname === `/genres/${genre.id}`;
+                return (
+                  <li key={genre.id}>
+                    <Link
+                      href={`/genres/${genre.id}`}
+                      className={` text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200 hover:text-black ${
+                        isActive ? "text-black " : "text-[rgba(0,0,0,0.43)]"
+                      }`}
+                    >
+                      {genre.name}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

@@ -3,8 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
-import Image from "next/image";
-import { blurhashToBase64 } from "blurhash-base64";
+import PosterImage from "@/components/imageBlurHash";
 import Link from "next/link";
 
 interface Genre {
@@ -88,15 +87,13 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
                 className="embla__slide relative flex-[0_0_100%] min-w-0"
               >
                 <figure className="size-full">
-                  <Image
+                  <PosterImage
                     src={
                       show.banner.src || "/video-poster-placeholder-image.jpg"
                     }
-                    alt={show.name}
+                    hash={show.banner.hash}
                     width={1300}
                     height={734}
-                    className="embla__slide__img object-cover h-full"
-                    blurDataURL={blurhashToBase64(show.banner.hash)}
                   />
                 </figure>
                 <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute bottom-0 left-0 w-full">

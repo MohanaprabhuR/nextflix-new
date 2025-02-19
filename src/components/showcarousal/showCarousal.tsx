@@ -1,7 +1,6 @@
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
-import { blurhashToBase64 } from "blurhash-base64";
+import PosterImage from "@/components/imageBlurHash";
 import Link from "next/link";
 
 interface Show {
@@ -37,14 +36,14 @@ const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
                 className="embla__slide"
               >
                 <figure className="size-full min-w-[200px]">
-                  <Image
+                  <PosterImage
                     src={
                       show?.poster?.src || "/video-poster-placeholder-image.jpg"
                     }
-                    alt="poster"
+                    alt={show?.name}
+                    hash={show?.poster?.hash}
                     width={200}
                     height={300}
-                    blurDataURL={blurhashToBase64(show?.poster?.hash)}
                   />
                 </figure>
               </Link>
