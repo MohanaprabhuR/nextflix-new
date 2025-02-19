@@ -144,8 +144,8 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
           </h3>
         )}
 
-        <div className="pt-6 overflow-scroll">
-          <ul className="flex gap-[0_9px] px-10">
+        <div className="pt-6">
+          <ul className="flex gap-[0_9px] px-10 overflow-scroll">
             {groupedVideos[selectedSeason]?.map((video: Video) => (
               <li
                 key={video.id}

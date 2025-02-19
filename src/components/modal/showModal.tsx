@@ -160,7 +160,7 @@ export default function ShowModal({ show }: ShowModalProps) {
               </h3>
             )}
 
-            <div className="pt-6 overflow-scroll">
+            <div className="pt-6 overflow-scroll pr-10">
               <ul className="flex gap-[0_9px] px-10">
                 {groupedVideos[selectedSeason]?.map((video: Video) => (
                   <li
