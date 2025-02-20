@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { fetchShows } from "@/utils/fetchData";
 import Showlist from "@/components/showlist";
 
@@ -23,29 +23,30 @@ export default function SearchClient({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
-    queryKey: ["shows-genres"],
-    queryFn: async (): Promise<ApiResponse> => {
-      try {
-        return await fetchShows();
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-        return initialData;
-      }
-    },
-    staleTime: 5 * 60 * 1000,
-    initialData,
+  const [showsQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ["shows"],
+        queryFn: fetchShows,
+        staleTime: 5 * 60 * 1000,
+        initialData: initialData.shows,
+      },
+    ],
   });
+
+  const shows = showsQuery?.data?.data || [];
+  const isLoading = showsQuery.isLoading;
+  const isError = showsQuery.isError;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
   const filteredShows = searchQuery
-    ? data?.shows?.data.filter((show) =>
+    ? shows.filter((show: { name: string }) =>
         show.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
-    : data?.shows?.data ?? [];
+    : shows;
 
   if (isLoading) {
     return <div className="text-white text-center mt-20">Loading...</div>;
@@ -53,9 +54,7 @@ export default function SearchClient({
 
   if (isError) {
     return (
-      <div className="text-red-500 text-center mt-20">
-        Error: {error.message}
-      </div>
+      <div className="text-red-500 text-center mt-20">Error fetching shows</div>
     );
   }
 

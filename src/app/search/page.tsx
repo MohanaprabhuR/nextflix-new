@@ -8,11 +8,10 @@ export default async function Home() {
   }
 
   const shows = await response.json();
+  console.log("shows-sercer", shows);
 
   return (
     <div>
-      {/* <pre>Server : {JSON.stringify(shows, null, 2)}</pre> */}
-
       <SearchClient initialData={shows} />
     </div>
   );

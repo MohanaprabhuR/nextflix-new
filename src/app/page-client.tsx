@@ -2,7 +2,7 @@
 
 import HeroCarousal from "@/components/herocarousal/heroCarousal";
 import Showcarousal from "@/components/showcarousal/showCarousal";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { fetchShows, fetchGenres } from "@/utils/fetchData";
 
 interface Show {
@@ -27,23 +27,27 @@ export default function HomeClient({
 }: {
   initialData: ApiResponse;
 }) {
-  const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
-    queryKey: ["shows-genres"],
-    queryFn: async (): Promise<ApiResponse> => {
-      try {
-        const [shows, genres] = await Promise.all([
-          fetchShows(),
-          fetchGenres(),
-        ]);
-        return { shows, genres };
-      } catch (error) {
-        console.error("Failed to fetch data", error);
-        return data ?? initialData;
-      }
-    },
-    staleTime: 5 * 60 * 1000,
-    initialData,
+  const [showsQuery, genresQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ["shows"],
+        queryFn: fetchShows,
+        staleTime: 5 * 60 * 1000,
+        initialData: initialData.shows,
+      },
+      {
+        queryKey: ["genres"],
+        queryFn: fetchGenres,
+        staleTime: 5 * 60 * 1000,
+        initialData: initialData.genres,
+      },
+    ],
   });
+
+  const shows = showsQuery.data?.data || [];
+  const genres = genresQuery.data?.data || [];
+  const isLoading = showsQuery.isLoading || genresQuery.isLoading;
+  const isError = showsQuery.isError || genresQuery.isError;
 
   if (isLoading) {
     return <div className="text-white text-center mt-20">Loading...</div>;
@@ -59,21 +63,21 @@ export default function HomeClient({
 
   return (
     <div>
-      <HeroCarousal shows={data?.shows?.data} />
+      <HeroCarousal shows={shows} />
       <section className="overflow-hidden pb-5">
         <div className="relative">
-          <Showcarousal shows={data?.shows?.data} title="Now Showing" />
+          <Showcarousal shows={shows} title="Now Showing" />
           <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
         </div>
 
-        {data?.genres?.data?.map((genre) => {
-          const matchingShows = data?.shows?.data?.filter((show) =>
+        {genres.map((genre) => {
+          const matchingShows = shows.filter((show) =>
             genre.shows.some((gShow) => gShow.id === show.id)
           );
 
           return (
             <div key={genre.id} className="mt-8">
-              {matchingShows.length > 0 && (
+              {matchingShows?.length > 0 && (
                 <div className="relative">
                   <Showcarousal shows={matchingShows} title={genre.name} />
                   <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>

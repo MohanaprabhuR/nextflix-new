@@ -15,5 +15,8 @@ export default async function Home() {
     throw new Error("Failed to fetch data");
   }
 
+  // console.log("shows", shows);
+  // console.log("genres", genres);
+
   return <HomeClient initialData={{ shows, genres }} />;
 }
