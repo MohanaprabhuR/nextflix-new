@@ -12,6 +12,7 @@ export interface Show {
   genres?: string[];
   name?: string;
   posters?: string[];
+  banner?: string;
   [key: string]: unknown;
 }
 
@@ -76,7 +77,6 @@ export default function HomeClient({
           const matchingShows: Show[] = shows.filter((show: Show) =>
             genre.shows.some((gShow: Show) => gShow.id === show.id)
           );
-
           return (
             <div key={genre.id} className="mt-8">
               {matchingShows.length > 0 && (
