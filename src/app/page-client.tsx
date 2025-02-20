@@ -2,16 +2,20 @@
 
 import HeroCarousal from "@/components/herocarousal/heroCarousal";
 import Showcarousal from "@/components/showcarousal/showCarousal";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { fetchShows, fetchGenres } from "@/utils/fetchData";
 
-interface Show {
+export interface Show {
   id: number;
   title: string;
+  description?: string;
+  genres?: string[];
+  name?: string;
+  posters?: string[];
   [key: string]: unknown;
 }
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
   shows: Show[];
@@ -44,10 +48,10 @@ export default function HomeClient({
     ],
   });
 
-  const shows = showsQuery.data?.data || [];
-  const genres = genresQuery.data?.data || [];
-  const isLoading = showsQuery.isLoading || genresQuery.isLoading;
-  const isError = showsQuery.isError || genresQuery.isError;
+  const shows: Show[] = showsQuery.data?.data || [];
+  const genres: Genre[] = genresQuery.data?.data || [];
+  const isLoading: boolean = showsQuery.isLoading || genresQuery.isLoading;
+  const isError: boolean = showsQuery.isError || genresQuery.isError;
 
   if (isLoading) {
     return <div className="text-white text-center mt-20">Loading...</div>;
@@ -55,9 +59,7 @@ export default function HomeClient({
 
   if (isError) {
     return (
-      <div className="text-red-500 text-center mt-20">
-        Error: {error.message}
-      </div>
+      <div className="text-red-500 text-center mt-20">Error loading data.</div>
     );
   }
 
@@ -70,14 +72,14 @@ export default function HomeClient({
           <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
         </div>
 
-        {genres.map((genre) => {
-          const matchingShows = shows.filter((show) =>
-            genre.shows.some((gShow) => gShow.id === show.id)
+        {genres.map((genre: Genre) => {
+          const matchingShows: Show[] = shows.filter((show: Show) =>
+            genre.shows.some((gShow: Show) => gShow.id === show.id)
           );
 
           return (
             <div key={genre.id} className="mt-8">
-              {matchingShows?.length > 0 && (
+              {matchingShows.length > 0 && (
                 <div className="relative">
                   <Showcarousal shows={matchingShows} title={genre.name} />
                   <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
