@@ -208,13 +208,8 @@ export default function ShowModal({ show }: ShowModalProps) {
                           {video.name}
                         </h2>
                         <p className="text-[#8B8787] text-sm font-[410] leading-[150%] tracking-[0.35px] pt-2 pb-3">
-                          {video.description.length > 80 ? (
-                            <>{video.description.substring(0, 80)}...</>
-                          ) : (
-                            video.description
-                          )}
+                          {video.description}
                         </p>
-
                         <p className="text-[#8B8787] text-[13px] font-normal leading-[100%] tracking-[0.13px]">
                           {video.original_air_date}
                         </p>
