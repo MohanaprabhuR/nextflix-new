@@ -80,7 +80,7 @@ export default function PosterImage({
           id="ambilight"
           width={width}
           height={height}
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feOffset in="SourceGraphic" result="source-copy" />
           <feColorMatrix
@@ -92,12 +92,12 @@ export default function PosterImage({
           <feMorphology
             in="bright-colors"
             operator="dilate"
-            radius="1"
+            radius="0.025"
             result="spread"
           />
           <feGaussianBlur
             in="spread"
-            stdDeviation="3"
+            stdDeviation="5"
             result="ambilight-light"
           />
           <feOffset in="SourceGraphic" result="source" />
