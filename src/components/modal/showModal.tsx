@@ -166,7 +166,8 @@ export default function ShowModal({ show }: ShowModalProps) {
                 Season {seasons[0]}
               </h3>
             )}
-            <div className="embla pt-6 overflow-hidden">
+            <div className="embla pt-6 overflow-hidden relative">
+              <div className="w-8 h-full rotate-180 z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute left-0 bottom-0"></div>
               <div className="embla__viewport px-10 " ref={emblaRef}>
                 <div className="embla__container  flex gap-[0_9px] is-draggable ">
                   {groupedVideos[selectedSeason]?.map((video: Video) => (
@@ -217,8 +218,8 @@ export default function ShowModal({ show }: ShowModalProps) {
                     </div>
                   ))}
                 </div>
-                <div className="w-8 h-full bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute right-0 bottom-0"></div>
               </div>
+              <div className="w-8  z-10 h-full bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute right-0 bottom-0"></div>
             </div>
           </div>
           <div className="pt-20 px-10 flex flex-col gap-4 w-full max-w-[608px]">
