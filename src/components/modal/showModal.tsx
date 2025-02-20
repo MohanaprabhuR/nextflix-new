@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import _ from "lodash";
 import { useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import ClassNames from "embla-carousel-class-names";
 
 interface Video {
   id: string;
@@ -57,7 +58,11 @@ interface ShowModalProps {
 }
 
 export default function ShowModal({ show }: ShowModalProps) {
-  const [emblaRef] = useEmblaCarousel();
+  const options = {
+    dragFree: false,
+  };
+  const [emblaRef] = useEmblaCarousel(options, [ClassNames()]);
+
   const router = useRouter();
 
   const groupedVideos = useMemo(() => {

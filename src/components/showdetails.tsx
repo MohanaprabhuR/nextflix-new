@@ -3,6 +3,7 @@ import Image from "next/image";
 import _ from "lodash";
 import { useState, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import ClassNames from "embla-carousel-class-names";
 
 interface Video {
   id: string;
@@ -49,7 +50,10 @@ interface ShowDetailsProps {
 }
 
 export default function ShowDetails({ show }: ShowDetailsProps) {
-  const [emblaRef] = useEmblaCarousel();
+  const options = {
+    dragFree: false,
+  };
+  const [emblaRef] = useEmblaCarousel(options, [ClassNames()]);
   const groupedVideos = useMemo(() => {
     return _.groupBy(show?.videos, "season");
   }, [show?.videos]);

@@ -1,5 +1,6 @@
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import ClassNames from "embla-carousel-class-names";
 import PosterImage from "@/components/imageBlurHash";
 import Link from "next/link";
 
@@ -20,7 +21,10 @@ interface ShowCarousalProps {
 }
 
 const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows, title }) => {
-  const [emblaRef] = useEmblaCarousel();
+  const options = {
+    dragFree: false,
+  };
+  const [emblaRef] = useEmblaCarousel(options, [ClassNames()]);
   return (
     <div className="w-full max-w-[1332px] mx-auto px-4 pt-20">
       <h2 className="pb-6 text-black text-2xl font-semibold leading-[115%]">

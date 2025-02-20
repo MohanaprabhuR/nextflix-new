@@ -22,3 +22,12 @@ body {
   scrollbar-width: none;
   font-variation-settings: "slnt" 0, "opsz" 32;
 }
+
+.is-draggable {
+  cursor: move;
+  cursor: grab;
+}
+
+.is-dragging {
+  cursor: grabbing;
+}
