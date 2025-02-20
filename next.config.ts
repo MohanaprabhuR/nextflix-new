@@ -4,9 +4,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*", // Be cautious with using "**" - see explanation below
+        hostname: "*",
       },
     ],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 

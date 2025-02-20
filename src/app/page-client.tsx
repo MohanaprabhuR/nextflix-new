@@ -19,7 +19,6 @@ export interface Show {
 export interface Genre {
   id: number;
   name: string;
-  shows: Show[];
 }
 
 interface ApiResponse {

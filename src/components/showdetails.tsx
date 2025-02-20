@@ -35,7 +35,7 @@ interface Poster {
 }
 
 interface Show {
-  release_year: ReactNode;
+  release_year: number;
   name: string;
   description: string;
   banner: Banner;
