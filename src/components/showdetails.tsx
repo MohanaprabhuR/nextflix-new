@@ -4,6 +4,7 @@ import _ from "lodash";
 import { useState, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
+import Link from "next/link";
 
 interface Video {
   id: string;

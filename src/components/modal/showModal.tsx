@@ -77,7 +77,7 @@ export default function ShowModal({ show }: ShowModalProps) {
 
   return (
     <Dialog open onOpenChange={() => router.back()}>
-      <DialogContent className="max-h-[90vh] max-w-[1008px] overflow-y-auto bg-white rounded-[16px_16px_0px_0px]">
+      <DialogContent className="max-h-[100vh] max-w-[1008px] overflow-y-auto bg-white rounded-[16px_16px_0px_0px]">
         <DialogHeader>
           <DialogTitle></DialogTitle>
         </DialogHeader>
