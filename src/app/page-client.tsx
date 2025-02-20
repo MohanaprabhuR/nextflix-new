@@ -68,8 +68,9 @@ export default function HomeClient({
       <HeroCarousal shows={shows} />
       <section className="overflow-hidden pb-5">
         <div className="relative">
+          <div className="w-[92px] h-[341px] opacity-[0.67] z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute left-0 rotate-180 -bottom-4"></div>
           <Showcarousal shows={shows} title="Now Showing" />
-          <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
+          <div className="w-[92px] z-10 h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
         </div>
 
         {genres.map((genre: Genre) => {
@@ -80,8 +81,9 @@ export default function HomeClient({
             <div key={genre.id} className="mt-8">
               {matchingShows.length > 0 && (
                 <div className="relative">
+                  <div className="w-[92px] h-[341px] opacity-[0.67] z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute left-0 rotate-180 -bottom-4"></div>
                   <Showcarousal shows={matchingShows} title={genre.name} />
-                  <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
+                  <div className="w-[92px] h-[341px] opacity-[0.67] z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
                 </div>
               )}
             </div>
