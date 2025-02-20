@@ -28,10 +28,6 @@ const ShowList: React.FC<ShowListProps> = ({ show }) => {
             height={300}
             hash={show.poster?.hash || ""}
           />
-          <div
-            style={{ backgroundImage: `url(${show?.poster?.src})` }}
-            className="w-[200px]  absolute  h-full bg-cover bg-center blur-[12px] z-[-1] opacity-50 pointer-events-none left-0 top-0"
-          ></div>
         </div>
       </Link>
       <div className="pt-4 flex flex-col gap-[0_9px]">

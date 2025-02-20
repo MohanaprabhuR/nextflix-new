@@ -60,7 +60,7 @@ export default function HomeClient({
   return (
     <div>
       <HeroCarousal shows={data?.shows?.data} />
-      <section className="overflow-hidden">
+      <section className="overflow-hidden pb-5">
         <div className="relative">
           <Showcarousal shows={data?.shows?.data} title="Now Showing" />
           <div className="w-[92px] h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 -bottom-4"></div>
