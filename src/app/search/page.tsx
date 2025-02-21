@@ -8,7 +8,6 @@ export default async function Home() {
   }
 
   const shows = await response.json();
-  console.log("shows-sercer", shows);
 
   return (
     <div>

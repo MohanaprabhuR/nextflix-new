@@ -1,5 +1,5 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,20 +21,20 @@ export default function HeaderClient({
 }) {
   const pathname = usePathname();
 
-  const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
-    queryKey: ["shows-genres"],
-    queryFn: async (): Promise<ApiResponse> => {
-      try {
-        const [genres] = await Promise.all([fetchGenres()]);
-        return genres;
-      } catch (error) {
-        console.error("Failed to fetch data", error);
-        return data ?? initialData;
-      }
-    },
-    staleTime: 5 * 60 * 1000,
-    initialData,
+  const [genresQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ["genres"],
+        queryFn: fetchGenres,
+        staleTime: 5 * 60 * 1000,
+        initialData: initialData.genres,
+      },
+    ],
   });
+
+  const genres: Genre[] = genresQuery.data?.data || [];
+  const isLoading: boolean = genresQuery.isLoading;
+  const isError: boolean = genresQuery.isError;
 
   if (isLoading) {
     return <div className="text-white text-center mt-20">Loading...</div>;
@@ -42,9 +42,7 @@ export default function HeaderClient({
 
   if (isError) {
     return (
-      <div className="text-red-500 text-center mt-20">
-        Error: {error.message}
-      </div>
+      <div className="text-red-500 text-center mt-20">Error loading data.</div>
     );
   }
 
@@ -69,7 +67,7 @@ export default function HeaderClient({
           </Link>
           <div>
             <ul className="flex items-center gap-4">
-              {data?.genres?.data.map((genre) => {
+              {genres.map((genre) => {
                 const isActive = pathname === `/genres/${genre.id}`;
                 return (
                   <li key={genre.id}>
