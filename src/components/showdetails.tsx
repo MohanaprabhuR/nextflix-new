@@ -161,33 +161,40 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                     key={video.id}
                     className="w-full max-w-[296px] flex-none group"
                   >
-                    <div className="relative flex items-center justify-center">
-                      <Image
-                        src={
-                          video.poster || "/video-poster-placeholder-image.jpg"
-                        }
-                        alt={video.name}
-                        width={296}
-                        height={173}
-                        className="object-cover rounded-xl transition-transform duration-200 shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)]"
-                      />
-                      <div className="absolute duration-100 delay-100 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="14"
-                          viewBox="0 0 11 14"
-                          fill="none"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M0.166859 0.342528C-3.92621e-07 0.570901 0 0.97997 0 1.79811V12.2019C0 13.02 -3.92621e-07 13.4291 0.166859 13.6575C0.312269 13.8565 0.534852 13.981 0.776864 13.9987C1.05457 14.019 1.39039 13.7978 2.06203 13.3554L9.95916 8.15353C10.542 7.76962 10.8334 7.57767 10.934 7.33359C11.022 7.12032 11.022 6.87967 10.934 6.66641C10.8334 6.42233 10.542 6.23038 9.95916 5.84647L2.06204 0.644582C1.3904 0.202167 1.05457 -0.0190398 0.776864 0.00128416C0.534852 0.0189958 0.312269 0.143511 0.166859 0.342528Z"
-                            fill="white"
-                          />
-                        </svg>
+                    <Link
+                      href={`/video/${video.id}`}
+                      as={`/video/${video.id}`}
+                      scroll={false}
+                    >
+                      <div className="relative flex items-center justify-center">
+                        <Image
+                          src={
+                            video.poster ||
+                            "/video-poster-placeholder-image.jpg"
+                          }
+                          alt={video.name}
+                          width={296}
+                          height={173}
+                          className="object-cover rounded-xl transition-transform duration-200 shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)]"
+                        />
+                        <div className="absolute duration-100 delay-100 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="11"
+                            height="14"
+                            viewBox="0 0 11 14"
+                            fill="none"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M0.166859 0.342528C-3.92621e-07 0.570901 0 0.97997 0 1.79811V12.2019C0 13.02 -3.92621e-07 13.4291 0.166859 13.6575C0.312269 13.8565 0.534852 13.981 0.776864 13.9987C1.05457 14.019 1.39039 13.7978 2.06203 13.3554L9.95916 8.15353C10.542 7.76962 10.8334 7.57767 10.934 7.33359C11.022 7.12032 11.022 6.87967 10.934 6.66641C10.8334 6.42233 10.542 6.23038 9.95916 5.84647L2.06204 0.644582C1.3904 0.202167 1.05457 -0.0190398 0.776864 0.00128416C0.534852 0.0189958 0.312269 0.143511 0.166859 0.342528Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
 
                     <div className="pt-6">
                       <h2 className="text-black text-base font-[430] leading-[100%] tracking-[0.4px]">
