@@ -1,12 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 "use client";
 
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Showlist from "@/components/showlist";
 import { useParams } from "next/navigation";
 import { fetchGenreData, fetchShows } from "@/utils/fetchData";
-
 interface Show {
   id: number;
   name: string;
@@ -33,47 +30,39 @@ export default function CategoryClient({
 }) {
   const { id } = useParams();
 
-  const [showsQuery, genresQuery] = useQueries({
-    queries: [
-      {
-        queryKey: ["shows"],
-        queryFn: fetchShows,
-        staleTime: 5 * 60 * 1000,
-        initialData: initialData.shows,
-      },
-      {
-        queryKey: ["genres", id],
-        queryFn: fetchGenreData(id as string),
-        staleTime: 5 * 60 * 1000,
-        initialData: initialData.genres,
-        enabled: !!id,
-      },
-    ],
+  const { data, isLoading, isError, error } = useQuery<ApiResponse, Error>({
+    queryKey: ["shows-genres", id],
+    queryFn: async (): Promise<ApiResponse> => {
+      try {
+        const [shows, genres] = await Promise.all([
+          fetchGenreData(id as string),
+          fetchShows(),
+        ]);
+        return { shows, genres };
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+        if (initialData) return initialData;
+        throw err;
+      }
+    },
+    staleTime: 5 * 60 * 1000,
+    initialData,
   });
-  const shows: Show[] = showsQuery.data?.data || [];
-  const genres: Genre[] = genresQuery.data?.data || [];
-  const isLoading: boolean = showsQuery.isLoading || genresQuery.isLoading;
-  const isError: boolean = showsQuery.isError || genresQuery.isError;
 
-  if (isLoading) {
-    return <div className="text-white text-center mt-20">Loading...</div>;
-  }
-
-  if (isError) {
-    return (
-      <div className="text-red-500 text-center mt-20">Error loading data.</div>
-    );
-  }
+  if (isLoading) return <div className="text-center text-lg">Loading...</div>;
+  if (isError)
+    return <div className="text-red-500">Error: {error?.message}</div>;
 
   return (
     <div className="w-full max-w-[1332px] mx-auto px-4 pt-6">
       <h2 className="text-black text-2xl font-semibold leading-[115%]">
-        {genres?.name}
+        {data?.genres?.data?.name}
       </h2>
 
       <div className="flex flex-wrap gap-16 pt-6">
-        {genres?.shows?.map((show: Show) => {
-          const matchedShow = shows.find((s) => s.id === show?.id);
+        {data?.genres?.data?.shows?.map((show: Show) => {
+          const matchedShow = data?.shows?.data?.find((s) => s.id === show.id);
+
           return matchedShow ? (
             <div key={matchedShow.id} className="w-full max-w-[200px]">
               <Showlist show={matchedShow} />
