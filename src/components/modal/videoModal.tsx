@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import ReactPlayer from "react-player"; // Import ReactPlayer
+import ReactPlayer from "react-player";
 import {
   Dialog,
   DialogContent,
