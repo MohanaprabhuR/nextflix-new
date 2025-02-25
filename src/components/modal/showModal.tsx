@@ -5,6 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogOverlay,
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,7 +15,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
 import React from "react";
-import { useShow } from "@/components/context/showContext"; // Import the context
 
 interface Video {
   id: string;
@@ -62,12 +62,6 @@ interface ShowModalProps {
 }
 
 export default function ShowModal({ show }: ShowModalProps) {
-  const { setShowId } = useShow();
-
-  useEffect(() => {
-    setShowId(show.id);
-  }, [show.id, setShowId]);
-
   const options = {
     dragFree: false,
   };
@@ -87,7 +81,8 @@ export default function ShowModal({ show }: ShowModalProps) {
 
   return (
     <Dialog open onOpenChange={() => router.back()}>
-      <DialogContent className="max-h-[100vh] max-w-[1008px] overflow-y-auto bg-white rounded-[16px_16px_0px_0px]">
+      <DialogOverlay className="bg-[rgba(255,255,255,0.86)] backdrop-blur-[100px]" />
+      <DialogContent className="max-h-[100vh] max-w-[1008px] overflow-y-auto bg-white rounded-[16px_16px_0px_0px] top-[56%]">
         <DialogHeader>
           <DialogTitle></DialogTitle>
         </DialogHeader>
@@ -186,9 +181,10 @@ export default function ShowModal({ show }: ShowModalProps) {
                       className="w-full max-w-[296px] flex-none group"
                     >
                       <Link
-                        href={`/video/${video.id}`}
-                        as={`/video/${video.id}`}
+                        href={`/shows/${show.id}/videos/${video.id}`}
+                        as={`/shows/${show.id}/videos/${video.id}`}
                         scroll={false}
+                        prefetch={false}
                       >
                         <div className="relative flex items-center justify-center">
                           <Image

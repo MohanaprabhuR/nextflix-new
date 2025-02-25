@@ -1,7 +1,12 @@
 // "use server";
 import { NextResponse } from "next/server";
 
-export async function GET({ showId }: { showId: string }) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
+  const showId = id;
   const API_URL = process.env.API_URL;
   try {
     const response = await fetch(`${API_URL}/api/shows/${showId}?populate=*`);

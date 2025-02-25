@@ -5,7 +5,6 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const API_URL = process.env.API_URL;
-
   const id = (await params).id;
 
   try {

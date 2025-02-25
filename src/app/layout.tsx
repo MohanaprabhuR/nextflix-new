@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/app/header";
 import { TanstackProvider } from "@/app/provider/tanstackProvider";
-import { ShowProvider } from "@/components/context/showContext";
 
 export const metadata: Metadata = {
   title: "Nextflix",
@@ -20,11 +19,9 @@ export default function RootLayout({
     <html>
       <body className="pt-[60px] pb-[64px]">
         <TanstackProvider>
-          <ShowProvider>
-            <Header />
-            {children}
-            {modal}
-          </ShowProvider>
+          <Header />
+          {children}
+          {modal}
         </TanstackProvider>
       </body>
     </html>

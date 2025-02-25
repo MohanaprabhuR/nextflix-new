@@ -36,6 +36,7 @@ interface Poster {
 }
 
 interface Show {
+  id: any;
   release_year: number;
   name: string;
   description: string;
@@ -56,17 +57,14 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
   };
   const [emblaRef] = useEmblaCarousel(options, [ClassNames()]);
 
-  // ✅ Ensure videos exist, otherwise provide an empty array
   const groupedVideos = useMemo(() => {
     return _.groupBy(show?.videos ?? [], "season");
   }, [show?.videos]);
 
-  // ✅ Ensure Object.keys() always works with a valid object
   const seasons = useMemo(() => {
     return _.sortBy(Object.keys(groupedVideos ?? {}));
   }, [groupedVideos]);
 
-  // ✅ Avoid accessing seasons[0] if seasons array is empty
   const [selectedSeason, setSelectedSeason] = useState<string>(
     seasons.length > 0 ? seasons[0] : ""
   );
@@ -162,9 +160,10 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                     className="w-full max-w-[296px] flex-none group"
                   >
                     <Link
-                      href={`/video/${video.id}`}
-                      as={`/video/${video.id}`}
+                      href={`/shows/${show.id}/videos/${video.id}`}
+                      as={`/shows/${show.id}/videos/${video.id}`}
                       scroll={false}
+                      prefetch={false}
                     >
                       <div className="relative flex items-center justify-center">
                         <Image
