@@ -56,7 +56,7 @@ export default function VideoDetails({ isOpen, showId }) {
               url={
                 video?.video_poster_hash?.startsWith("http")
                   ? video.video_poster_hash
-                  : "https://www.youtube.com/watch?v=5OQawXs9X1o"
+                  : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
               }
               controls
               width="100%"
@@ -80,7 +80,7 @@ export default function VideoDetails({ isOpen, showId }) {
                   url={
                     video?.video_poster_hash?.startsWith("http")
                       ? video.video_poster_hash
-                      : "https://www.youtube.com/watch?v=5OQawXs9X1o"
+                      : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
                   }
                   muted
                   width="100%"
