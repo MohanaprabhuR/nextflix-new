@@ -1,6 +1,17 @@
-import React from "react";
+"use client";
+
+import { useShow } from "@/components/context/showContext";
+import { useParams } from "next/navigation";
 import VideoModal from "@/components/modal/videoModal";
-const page = () => {
+
+const Page = () => {
+  const params = useParams();
+  const videoId = params?.id as string;
+  const { showId } = useShow();
+
+  console.log(videoId, "videoId");
+  console.log(showId, "showId");
+
   return (
     <div>
       <VideoModal />
@@ -8,4 +19,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

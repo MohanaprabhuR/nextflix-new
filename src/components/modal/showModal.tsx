@@ -9,11 +9,12 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import _ from "lodash";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
 import React from "react";
+import { useShow } from "@/components/context/showContext"; // Import the context
 
 interface Video {
   id: string;
@@ -45,6 +46,7 @@ interface Poster {
 }
 
 interface Show {
+  id(id: any): unknown;
   release_year: number;
   name: string;
   description: string;
@@ -60,6 +62,12 @@ interface ShowModalProps {
 }
 
 export default function ShowModal({ show }: ShowModalProps) {
+  const { setShowId } = useShow();
+
+  useEffect(() => {
+    setShowId(show.id);
+  }, [show.id, setShowId]);
+
   const options = {
     dragFree: false,
   };

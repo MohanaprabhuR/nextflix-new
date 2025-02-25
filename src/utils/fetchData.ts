@@ -7,6 +7,15 @@ export const fetchShows = async () => {
   return shows;
 };
 
+export const fetchShowsData = async (id: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/shows/${id}/?populate=*`
+  );
+  if (!response.ok) throw new Error("Failed to fetch genre");
+  const shows = await response.json();
+  return shows;
+};
+
 export const fetchGenres = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/genres?populate=*`
