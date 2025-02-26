@@ -81,7 +81,7 @@ export default function VideoModal({ isOpen, onClose, showId }) {
                     onClickPreview={() => setPlaying(true)}
                   />
 
-                  <div className="pointer-events-none absolute inset-0 z-[-1] blur-[80px] saturate-[300%] transition-opacity duration-500 ease-in-out">
+                  <div className="pointer-events-none absolute inset-0 z-[-1] blur-[100px] saturate-[300%] transition-opacity duration-500 ease-in-out">
                     {!playing ? (
                       <div
                         className="absolute inset-0 bg-cover bg-center"

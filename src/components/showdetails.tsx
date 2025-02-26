@@ -75,7 +75,7 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
   );
 
   return (
-    <div className="bg-white max-w-[1008px] w-full rounded-[16px_16px_0px_0px] overflow-hidden mx-auto shadow-lg pb-10">
+    <div className="bg-white max-w-[1008px] w-full rounded-[16px_16px_0px_0px] overflow-hidden mx-auto pb-10">
       <div className="relative">
         <Image
           src={show?.banner?.src || "/video-poster-placeholder-image.jpg"}
