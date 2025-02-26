@@ -5,8 +5,10 @@ import { useState, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
+import { Blurhash } from "react-blurhash";
 
 interface Video {
+  video_poster_hash: string;
   id: string;
   name: string;
   description: string;
@@ -26,6 +28,7 @@ interface CastMember {
 }
 
 interface Banner {
+  hash: string;
   src: string;
   alt?: string;
 }
@@ -52,6 +55,8 @@ interface ShowDetailsProps {
 }
 
 export default function ShowDetails({ show }: ShowDetailsProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const options = {
     dragFree: false,
   };
@@ -77,9 +82,22 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
           alt={show?.name}
           width={1920}
           height={500}
-          priority
-          className="w-full h-[500px] object-cover object-center"
+          className={`w-full h-[500px] object-cover object-center ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setIsLoaded(true)}
         />
+        {!isLoaded && (
+          <Blurhash
+            hash={show?.banner?.hash}
+            width={1920}
+            height={500}
+            resolutionX={32}
+            resolutionY={32}
+            punch={1}
+            className="absolute inset-0"
+          />
+        )}
 
         <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
           <div className="flex justify-between items-end">
@@ -174,8 +192,22 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                           alt={video.name}
                           width={296}
                           height={173}
-                          className="object-cover rounded-xl transition-transform duration-200 shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)]"
+                          className={`object-cover rounded-xl transition-transform duration-200 shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
+                            isLoaded ? "opacity-100" : "opacity-0"
+                          }`}
+                          onLoad={() => setIsLoaded(true)}
                         />
+                        {!isLoaded && (
+                          <Blurhash
+                            hash={video?.video_poster_hash}
+                            width={296}
+                            height={173}
+                            resolutionX={32}
+                            resolutionY={32}
+                            punch={1}
+                            className="absolute inset-0"
+                          />
+                        )}
                         <div className="absolute duration-100 delay-100 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
