@@ -1,5 +1,5 @@
 "use client";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

@@ -39,7 +39,7 @@ interface Poster {
 }
 
 interface Show {
-  id: any;
+  id: unknown;
   release_year: number;
   name: string;
   description: string;

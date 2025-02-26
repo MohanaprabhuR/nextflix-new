@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import _ from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
@@ -49,7 +49,7 @@ interface Poster {
 }
 
 interface Show {
-  id(id: any): unknown;
+  id: unknown;
   release_year: number;
   name: string;
   description: string;

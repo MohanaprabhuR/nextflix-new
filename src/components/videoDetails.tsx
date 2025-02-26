@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ReactPlayer from "react-player";
 import LoadingSkeleton from "@/components/ui/loadingSkeleton";
