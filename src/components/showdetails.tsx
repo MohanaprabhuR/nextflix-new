@@ -259,11 +259,13 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
         </p>
         <ul className="flex gap-[0_8px] ">
           {show?.genres?.map((genre: Genre) => (
-            <li
-              key={genre.id}
-              className="bg-[#F7F7F7] text-[#8B8787] text-sm font-[430] leading-[100%] tracking-[0.35px] px-2.5 py-1.5 rounded-[8px]"
-            >
-              {genre.name}
+            <li key={genre.id}>
+              <Link
+                className="bg-[#F7F7F7] text-[#8B8787] text-sm font-[430] leading-[100%] tracking-[0.35px] px-2.5 py-1.5 rounded-[8px]"
+                href={`/genres/${genre.id}`}
+              >
+                {genre.name}
+              </Link>
             </li>
           ))}
         </ul>
