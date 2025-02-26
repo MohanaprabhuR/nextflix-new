@@ -212,7 +212,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                             alt={video.name}
                             width={296}
                             height={173}
-                            className={`object-cover rounded-xl transition-transform duration-200 shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
+                            className={`object-cover rounded-xl  group-hover:scale-[1.03] delay-100 transition-all duration-200 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
                               isLoaded ? "opacity-100" : "opacity-0"
                             }`}
                             onLoad={() => setIsLoaded(true)}
@@ -228,7 +228,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                               className="absolute inset-0"
                             />
                           )}
-                          <div className="absolute duration-100 delay-100 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
+                          <div className="absolute  delay-100 duration-200 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="11"
