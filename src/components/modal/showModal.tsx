@@ -18,6 +18,7 @@ import React from "react";
 import { Blurhash } from "react-blurhash";
 
 interface Video {
+  video_poster_hash: string;
   id: string;
   name: string;
   description: string;
