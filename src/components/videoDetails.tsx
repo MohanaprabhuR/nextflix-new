@@ -47,7 +47,6 @@ export default function VideoDetails({ isOpen, showId }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center w-full h-screen bg-[rgba(0,0,0,0.7)] backdrop-blur-[100px]">
       <div className="relative w-[1008px] h-[567px]">
-        {loading && <LoadingSkeleton />}
         {error && <p className="text-red-500">{error}</p>}
         {video ? (
           <div className="relative w-full h-full">

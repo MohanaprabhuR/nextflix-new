@@ -62,7 +62,6 @@ export default function VideoModal({ isOpen, onClose, showId }) {
           <DialogHeader>
             <DialogTitle></DialogTitle>
             <DialogDescription>
-              {loading && <LoadingSkeleton />}
               {error && <p className="text-red-500">{error}</p>}
               {video ? (
                 <div className="relative w-[1008px] h-[576px]">
