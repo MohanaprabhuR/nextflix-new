@@ -7,18 +7,23 @@ import { fetchShows, fetchGenres } from "@/utils/fetchData";
 
 export interface Show {
   id: number;
-  title: string;
-  description?: string;
-  genres?: string[];
-  name?: string;
-  posters?: string[];
-  banner?: string;
-  [key: string]: unknown;
+  name: string;
+  description: string;
+  genres: Genre[];
+  banner: {
+    hash: string;
+    src: string;
+  };
+  poster: {
+    hash: string;
+    src: string;
+  };
 }
 
 export interface Genre {
-  id: number;
+  id: string;
   name: string;
+  shows: Show[];
 }
 
 interface ApiResponse {
@@ -52,9 +57,14 @@ export default function HomeClient({
   const genres: Genre[] = genresQuery.data?.data || [];
   const isLoading: boolean = showsQuery.isLoading || genresQuery.isLoading;
   const isError: boolean = showsQuery.isError || genresQuery.isError;
+  const isPending: boolean = showsQuery.isPending || genresQuery.isPending;
+
+  if (isPending) {
+    return <div className="text-red-500 text-center mt-20">Pending...</div>;
+  }
 
   if (isLoading) {
-    return <div className="text-white text-center mt-20">Loading...</div>;
+    return <div className="text-red-500 text-center mt-20">Loading...</div>;
   }
 
   if (isError) {
@@ -62,6 +72,8 @@ export default function HomeClient({
       <div className="text-red-500 text-center mt-20">Error loading data.</div>
     );
   }
+
+  console.log("shows:", shows);
 
   return (
     <div>
