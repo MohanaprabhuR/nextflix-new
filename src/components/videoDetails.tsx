@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ReactPlayer from "react-player";
-import LoadingSkeleton from "@/components/ui/loadingSkeleton";
 
 export default function VideoDetails({ isOpen, showId }) {
   const [playing, setPlaying] = useState(false);
   const [show, setShow] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const pathname = usePathname();
@@ -20,7 +18,6 @@ export default function VideoDetails({ isOpen, showId }) {
 
     const fetchShowData = async () => {
       try {
-        setLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/shows/${showId}?populate=*`
         );
@@ -33,7 +30,6 @@ export default function VideoDetails({ isOpen, showId }) {
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false);
       }
     };
 

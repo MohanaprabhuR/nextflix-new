@@ -10,12 +10,10 @@ import {
   DialogDescription,
   DialogOverlay,
 } from "@/components/ui/dialog";
-import LoadingSkeleton from "@/components/ui/loadingSkeleton";
 
 export default function VideoModal({ isOpen, onClose, showId }) {
   const [playing, setPlaying] = useState(false);
   const [show, setShow] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const pathname = usePathname();
@@ -29,7 +27,6 @@ export default function VideoModal({ isOpen, onClose, showId }) {
 
     const fetchShowData = async () => {
       try {
-        setLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/shows/${showId}?populate=*`
         );
@@ -37,13 +34,11 @@ export default function VideoModal({ isOpen, onClose, showId }) {
         if (!response.ok) {
           throw new Error("Failed to fetch show data");
         }
-        const data = await response.json();
 
+        const data = await response.json();
         setShow(data);
       } catch (err) {
         setError(err.message);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -55,64 +50,62 @@ export default function VideoModal({ isOpen, onClose, showId }) {
   const video = show?.data?.videos?.find((list) => String(list.id) === videoId);
 
   return (
-    <>
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogOverlay className="bg-[rgba(0,0,0,0.70)] backdrop-blur-[100px]" />
-        <DialogContent className="pb-0 max-w-[1008px]  w-full z-[9999] h-[576px] ">
-          <DialogHeader>
-            <DialogTitle></DialogTitle>
-            <DialogDescription>
-              {error && <p className="text-red-500">{error}</p>}
-              {video ? (
-                <div className="relative w-[1008px] h-[576px]">
-                  <ReactPlayer
-                    className="rounded-2xl overflow-hidden"
-                    url={
-                      video?.video_poster_hash?.startsWith("http")
-                        ? video.video_poster_hash
-                        : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
-                    }
-                    controls
-                    width="100%"
-                    height="100%"
-                    playing={playing}
-                    light={video?.poster}
-                    onClickPreview={() => setPlaying(true)}
-                  />
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogOverlay className="bg-[rgba(0,0,0,0.70)] backdrop-blur-[100px]" />
+      <DialogContent className="pb-0 max-w-[1008px] w-full z-[9999] h-[576px]">
+        <DialogHeader>
+          <DialogTitle />
+          <DialogDescription>
+            {error && <p className="text-red-500">{error}</p>}
+            {video ? (
+              <div className="relative w-[1008px] h-[576px]">
+                <ReactPlayer
+                  className="rounded-2xl overflow-hidden"
+                  url={
+                    video?.video_poster_hash?.startsWith("http")
+                      ? video.video_poster_hash
+                      : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
+                  }
+                  controls
+                  width="100%"
+                  height="100%"
+                  playing={playing}
+                  light={video?.poster}
+                  onClickPreview={() => setPlaying(true)}
+                />
 
-                  <div className="pointer-events-none absolute inset-0 z-[-1] blur-[100px] saturate-[300%] transition-opacity duration-500 ease-in-out">
-                    {!playing ? (
-                      <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{
-                          backgroundImage: `url(${video?.poster})`,
-                          filter: "blur(80px) brightness(0.5)",
-                        }}
-                      />
-                    ) : (
-                      <ReactPlayer
-                        url={
-                          video?.video_poster_hash?.startsWith("http")
-                            ? video.video_poster_hash
-                            : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
-                        }
-                        muted
-                        width="100%"
-                        height="100%"
-                        playing
-                        loop
-                        controls={false}
-                      />
-                    )}
-                  </div>
+                <div className="pointer-events-none absolute inset-0 z-[-1] blur-[100px] saturate-[300%] transition-opacity duration-500 ease-in-out">
+                  {!playing ? (
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${video?.poster})`,
+                        filter: "blur(80px) brightness(0.5)",
+                      }}
+                    />
+                  ) : (
+                    <ReactPlayer
+                      url={
+                        video?.video_poster_hash?.startsWith("http")
+                          ? video.video_poster_hash
+                          : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
+                      }
+                      muted
+                      width="100%"
+                      height="100%"
+                      playing
+                      loop
+                      controls={false}
+                    />
+                  )}
                 </div>
-              ) : (
-                <p>No video found with ID: {videoId}</p>
-              )}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </>
+              </div>
+            ) : (
+              <p>No video found with ID: {videoId}</p>
+            )}
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }

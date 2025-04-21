@@ -10,10 +10,7 @@ const nextConfig = {
   },
   //Ignore the type errors
   typescript: {
-    ignoreBuildErrors: true, // Ignores TypeScript errors during build
-  },
-  eslint: {
-    ignoreDuringBuilds: true, // Ignores ESLint errors during build
+    ignoreBuildErrors: true,
   },
 };
 

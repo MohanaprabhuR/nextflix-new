@@ -1,14 +1,6 @@
 "use client";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogOverlay,
-} from "@/components/ui/dialog";
+
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import _ from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -31,44 +23,6 @@ interface Video {
 interface Genre {
   id: string;
   name: string;
-}
-
-interface CastMember {
-  name: string;
-  role?: string;
-}
-
-interface Banner {
-  hash: string;
-  src: string;
-  alt?: string;
-}
-
-interface Poster {
-  src: string;
-  alt?: string;
-}
-
-interface Accolade {
-  quote: string;
-  person: string;
-}
-
-interface Show {
-  accolades: Accolade[];
-  id: string;
-  release_year: number;
-  name: string;
-  description: string;
-  banner: Banner;
-  poster: Poster;
-  genres: Genre[];
-  videos: Video[];
-  cast_and_crew: CastMember[];
-}
-
-interface ShowModalProps {
-  show: Show;
 }
 
 export default function ShowDetails({ show }: ShowDetailsProps) {
@@ -124,8 +78,6 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
       emblaApi.off("select", onSelect);
     };
   }, [emblaApi, onInit, onSelect]);
-
-  const router = useRouter();
 
   const groupedVideos = useMemo(
     () => _.groupBy(show?.videos, "season"),
