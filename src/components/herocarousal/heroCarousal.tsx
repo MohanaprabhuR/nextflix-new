@@ -26,7 +26,7 @@ interface CarouselProps {
   shows: Show[];
 }
 
-const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
+const HeroCarousel: React.FC<CarouselProps> = ({ shows, heroCarousel }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
@@ -80,24 +80,50 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
       <div className="relative embla rounded-2xl overflow-hidden">
         <div ref={emblaRef} className="overflow-hidden embla-viewport">
           <div className="flex">
-            {shows?.map((show) => (
+            {heroCarousel?.map((carousel) => (
               <Link
-                href={`/shows/${show.id}`}
-                key={show.id}
+                href={`/shows/${carousel.id}`}
+                key={carousel.id}
                 className="embla__slide relative flex-[0_0_100%] min-w-0"
               >
                 <figure className="size-full">
                   <PosterImage
                     src={
-                      show?.banner?.src || "/video-poster-placeholder-image.jpg"
+                      carousel?.banner?.src ||
+                      "/video-poster-placeholder-image.jpg"
                     }
-                    hash={show?.banner?.hash}
+                    hash={carousel?.banner?.hash}
                     width={1300}
                     height={734}
-                    alt={show.name}
+                    alt={carousel.name}
                   />
                 </figure>
+
                 <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
+                  <div className="w-full max-w-3xl">
+                    <h2 className="text-white text-2xl font-semibold leading-[115%] pb-4">
+                      {carousel.name}
+                    </h2>
+                    <ul className="flex gap-[0_8px] pb-2">
+                      {carousel.genres.map((genre) => (
+                        <li
+                          key={genre.id}
+                          className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer"
+                        >
+                          {genre.name}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-white text-sm font-normal leading-[150%] tracking-[0.14px] pb-4">
+                      {carousel.description}
+                    </p>
+                    <button className="hover:-translate-y-[2px] transition-all delay-300 ease-in-out bg-white outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[30px] py-3">
+                      Watch Now
+                    </button>
+                  </div>
+                </div>
+
+                {/* <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
                   <div className="w-full max-w-3xl">
                     <h2 className="text-white text-2xl font-semibold leading-[115%] pb-4">
                       {show.name}
@@ -119,7 +145,7 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
                       Watch Now
                     </button>
                   </div>
-                </div>
+                </div> */}
               </Link>
             ))}
           </div>
