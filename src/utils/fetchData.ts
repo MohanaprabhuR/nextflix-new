@@ -35,19 +35,19 @@ export async function fetchGenreData(id: string) {
 }
 
 export async function fetchHeroCarouselData() {
-  const genre = await fetch(
+  const heroCarousel = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/heroCarousal/?populate=*`
   );
-  if (!genre.ok) throw new Error("Failed to fetch genre");
-  const data = await genre.json();
+  if (!heroCarousel.ok) throw new Error("Failed to fetch genre");
+  const data = await heroCarousel.json();
   return data;
 }
 
 export async function fetchShowCarouselData() {
-  const genre = await fetch(
+  const showCarousal = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/swimlaneCarousel/?populate=*`
   );
-  if (!genre.ok) throw new Error("Failed to fetch genre");
-  const data = await genre.json();
+  if (!showCarousal.ok) throw new Error("Failed to fetch genre");
+  const data = await showCarousal.json();
   return data;
 }
