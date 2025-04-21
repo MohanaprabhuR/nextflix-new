@@ -1,3 +1,4 @@
+// fetchShows
 export const fetchShows = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/shows?populate=*`
@@ -7,6 +8,7 @@ export const fetchShows = async () => {
   return shows;
 };
 
+// fetchShowsData
 export const fetchShowsData = async (id: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/shows/${id}/?populate=*`
@@ -16,6 +18,7 @@ export const fetchShowsData = async (id: string) => {
   return shows;
 };
 
+// fetchGenres
 export const fetchGenres = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/genres?populate=*`
@@ -25,6 +28,7 @@ export const fetchGenres = async () => {
   return genres;
 };
 
+// GenreData
 export async function fetchGenreData(id: string) {
   const genre = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/genres/${id}?populate=*`
@@ -34,6 +38,7 @@ export async function fetchGenreData(id: string) {
   return data;
 }
 
+// Hero carousal
 export async function fetchHeroCarouselData() {
   const heroCarousel = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/heroCarousal/?populate=*`
@@ -43,6 +48,7 @@ export async function fetchHeroCarouselData() {
   return data;
 }
 
+// Show Carousal
 export async function fetchShowCarouselData() {
   const showCarousal = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/swimlaneCarousel/?populate=*`
