@@ -89,9 +89,9 @@ const HeroCarousel: React.FC<CarouselProps> = ({ shows }) => {
                 <figure className="size-full">
                   <PosterImage
                     src={
-                      show.banner.src || "/video-poster-placeholder-image.jpg"
+                      show?.banner?.src || "/video-poster-placeholder-image.jpg"
                     }
-                    hash={show.banner.hash}
+                    hash={show?.banner?.hash}
                     width={1300}
                     height={734}
                     alt={show.name}

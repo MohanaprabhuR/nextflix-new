@@ -73,7 +73,7 @@ export default function HomeClient({
     );
   }
 
-  console.log("shows:", shows);
+  console.log("shows-new:", shows);
 
   return (
     <div>

@@ -62,7 +62,6 @@ export default function CategoryClient({
       <div className="flex flex-wrap gap-16 pt-6">
         {data?.genres?.data?.shows?.map((show: Show) => {
           const matchedShow = data?.shows?.data?.find((s) => s.id === show.id);
-
           return matchedShow ? (
             <div key={matchedShow.id} className="w-full max-w-[200px]">
               <Showlist show={matchedShow} />

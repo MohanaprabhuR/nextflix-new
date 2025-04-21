@@ -15,7 +15,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
 import React from "react";
-import { Blurhash } from "react-blurhash";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 
@@ -154,17 +153,6 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
           }`}
           onLoad={() => setIsLoaded(true)}
         />
-        {!isLoaded && (
-          <Blurhash
-            hash={show?.banner?.hash}
-            width={1920}
-            height={500}
-            resolutionX={32}
-            resolutionY={32}
-            punch={1}
-            className="absolute inset-0"
-          />
-        )}
 
         <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
           <div className="flex justify-between items-end">
@@ -264,17 +252,6 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                           }`}
                           onLoad={() => setIsLoaded(true)}
                         />
-                        {!isLoaded && (
-                          <Blurhash
-                            hash={video?.video_poster_hash}
-                            width={296}
-                            height={173}
-                            resolutionX={32}
-                            resolutionY={32}
-                            punch={1}
-                            className="absolute inset-0"
-                          />
-                        )}
                         <div className="absolute duration-200 delay-100 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -384,7 +361,7 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                       <button
                         key={`dot-${index}`}
                         type="button"
-                        className={`embla__dot w-[6px] h-[6px] rounded-full ${
+                        className={`embla__dot w-[4px] h-[4px] rounded-full ${
                           index === selectedIndex
                             ? "embla__dot--selected bg-black"
                             : "bg-[#000000] bg-opacity-20"
