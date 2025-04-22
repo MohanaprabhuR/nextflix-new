@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const API_URL = process.env.API_URL;
   try {
-    const response = await fetch(`${API_URL}/api/genres?populate=*`);
+    const response = await fetch(
+      `${API_URL}/api/genres?populate=*&pagination[page]=1&pagination[pageSize]=1000`
+    );
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {

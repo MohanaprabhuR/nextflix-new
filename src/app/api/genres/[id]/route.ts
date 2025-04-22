@@ -8,7 +8,9 @@ export async function GET(
   const id = (await params).id;
 
   try {
-    const response = await fetch(`${API_URL}/api/genres/${id}?populate=*`);
+    const response = await fetch(
+      `${API_URL}/api/genres/${id}?populate=*&pagination[page]=1&pagination[pageSize]=1000`
+    );
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
