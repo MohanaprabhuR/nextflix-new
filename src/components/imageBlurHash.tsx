@@ -66,6 +66,7 @@ export default function PosterImage({
       }}
     >
       <Image
+        className="object-cover"
         ref={imageRef}
         src={src}
         alt={alt}
