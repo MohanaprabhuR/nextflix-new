@@ -26,7 +26,7 @@ interface CarouselProps {
   shows: Show[];
 }
 
-const HeroCarousel: React.FC<CarouselProps> = ({ shows, heroCarousel }) => {
+const HeroCarousel: React.FC<CarouselProps> = ({ heroCarousel }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 

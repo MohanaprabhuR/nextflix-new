@@ -11,6 +11,7 @@ export default async function Page(props: { params: Params }) {
   const dataReat = await fetch(
     `${process.env.API_URL}/api/shows/${id}?populate=*`
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showReact = await dataReat.json();
 
   return (

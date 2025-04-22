@@ -5,7 +5,6 @@ import Showcarousal from "@/components/showcarousal/showCarousal";
 import { useQueries } from "@tanstack/react-query";
 import {
   fetchShows,
-  fetchGenres,
   fetchHeroCarouselData,
   fetchShowCarouselData,
 } from "@/utils/fetchData";
@@ -72,19 +71,13 @@ export default function HomeClient({
 }: {
   initialData: ApiResponse;
 }) {
-  const [showsQuery, genresQuery, heroCarousel, showCarousel] = useQueries({
+  const [showsQuery, heroCarousel, showCarousel] = useQueries({
     queries: [
       {
         queryKey: ["shows"],
         queryFn: fetchShows,
         staleTime: 5 * 60 * 1000,
         initialData: initialData.shows,
-      },
-      {
-        queryKey: ["genres"],
-        queryFn: fetchGenres,
-        staleTime: 5 * 60 * 1000,
-        initialData: initialData.genres,
       },
       {
         queryKey: ["heroCarousel"],
