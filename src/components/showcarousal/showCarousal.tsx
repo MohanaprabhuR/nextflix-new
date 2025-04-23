@@ -17,44 +17,36 @@ interface Show {
 
 interface ShowCarousalProps {
   shows: Show[];
-  title: string;
 }
 
 const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows }) => {
-  const options = {
-    dragFree: false,
-  };
-  const [emblaRef] = useEmblaCarousel(options, [ClassNames()]);
+  const [emblaRef] = useEmblaCarousel({ dragFree: false }, [ClassNames()]);
+
   return (
     <div className="">
-      {/* <h2 className="pb-6 text-black text-2xl font-semibold leading-[115%]">
-        {title}
-      </h2> */}
       <div className="embla">
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container flex gap-[0_32px]">
-            {shows?.map((show) => {
-              return (
-                <Link
-                  href={`/shows/${show.id}`}
-                  key={show.id}
-                  className="embla__slide"
-                >
-                  <figure className="size-full min-w-[200px]">
-                    <PosterImage
-                      src={
-                        show?.poster?.src ||
-                        "/video-poster-placeholder-image.jpg"
-                      }
-                      alt={show?.name}
-                      hash={show?.poster?.hash}
-                      width={200}
-                      height={300}
-                    />
-                  </figure>
-                </Link>
-              );
-            })}
+            {shows.map((show) => (
+              <Link
+                key={show.id}
+                href={`/shows/${show.id}`}
+                className="embla__slide"
+                scroll={false}
+              >
+                <figure className="size-full min-w-[200px]">
+                  <PosterImage
+                    src={
+                      show.poster?.src || "/video-poster-placeholder-image.jpg"
+                    }
+                    alt={show.name}
+                    hash={show.poster?.hash}
+                    width={200}
+                    height={300}
+                  />
+                </figure>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

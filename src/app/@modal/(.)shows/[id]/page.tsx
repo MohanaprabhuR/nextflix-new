@@ -1,12 +1,12 @@
 import ShowModal from "@/components/modal/showModal";
 
-type Params = Promise<{ id: string }>;
+type Params = { id: string };
 
-export default async function Page(props: { params: Params }) {
-  const { id } = await props.params;
-
-  const data = await fetch(`${process.env.API_URL}/api/shows/${id}?populate=*`);
-  const show = await data.json();
+export default async function Page({ params }: { params: Params }) {
+  const res = await fetch(
+    `${process.env.API_URL}/api/shows/${params.id}?populate=*`
+  );
+  const show = await res.json();
 
   return <ShowModal show={show.data} />;
 }
