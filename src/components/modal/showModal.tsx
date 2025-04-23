@@ -69,16 +69,12 @@ export default function ShowModal({ show }: ShowModalProps) {
   const [selectedSeason, setSelectedSeason] = useState<string>("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-
+  const [isOpen, setIsOpen] = useState(true);
   const [emblaRef] = useEmblaCarousel({ dragFree: false }, [ClassNames()]);
   const [emblaAccoladesRef, emblaApi] = useEmblaCarousel(
     { loop: true, duration: 20 },
     [Autoplay({ delay: 3000, stopOnInteraction: false }), Fade()]
   );
-
-  const router = useRouter();
-
-  const closeModal = () => router.back();
 
   const onDotClick = useCallback(
     (index: number) => {
@@ -123,6 +119,19 @@ export default function ShowModal({ show }: ShowModalProps) {
     if (seasons.length > 0) setSelectedSeason(seasons[0]);
   }, [seasons]);
 
+  const router = useRouter();
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setTimeout(() => {
+      router.back();
+    }, 200);
+  };
+
+  useEffect(() => {
+    if (seasons.length > 0) setSelectedSeason(seasons[0]);
+  }, [seasons]);
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
@@ -132,14 +141,14 @@ export default function ShowModal({ show }: ShowModalProps) {
   }, []);
 
   return (
-    <Transition appear show={true} as={Fragment}>
+    <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-30" onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="transition-opacity duration-200 ease-in-out"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="transition-opacity duration-300 ease-in-out"
+          leave="transition-opacity duration-200 ease-in-out"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -153,7 +162,7 @@ export default function ShowModal({ show }: ShowModalProps) {
               enter="transition-all transform duration-200 ease-in-out"
               enterFrom="translate-y-full opacity-0"
               enterTo="translate-y-0 opacity-100"
-              leave="transition-all transform duration-300 ease-in-out"
+              leave="transition-all transform duration-200 ease-in-out"
               leaveFrom="translate-y-0 opacity-100"
               leaveTo="translate-y-full opacity-0"
             >
