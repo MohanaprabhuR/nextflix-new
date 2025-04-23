@@ -88,7 +88,9 @@ export default function VideoDetails({ isOpen, showId }) {
             </div>
           </div>
         ) : (
-          <p>No video found with ID: {videoId}</p>
+          <div className=" h-fullh-full absolute -translate-x-2/4 -translate-y-2/4 flex items-center left-2/4 top-2/4">
+            <div className="w-10 h-10 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          </div>
         )}
       </div>
     </div>

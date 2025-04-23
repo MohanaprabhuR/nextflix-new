@@ -194,6 +194,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                       show?.banner?.src || "/video-poster-placeholder-image.jpg"
                     }
                     alt={show?.name}
+                    hash={show?.banner?.hash}
                     width={1920}
                     height={500}
                     className={`w-full h-[500px] object-cover object-center ${
