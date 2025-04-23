@@ -85,6 +85,7 @@ const HeroCarousel: React.FC<CarouselProps> = ({ heroCarousel }) => {
                 href={`/shows/${carousel.id}`}
                 key={carousel.id}
                 className="embla__slide relative flex-[0_0_100%] min-w-0"
+                scroll={false}
               >
                 <figure className="size-full">
                   <PosterImage

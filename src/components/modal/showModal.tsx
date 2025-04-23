@@ -148,7 +148,7 @@ export default function ShowModal({ show }: ShowModalProps) {
           enter="transition-opacity duration-200 ease-in-out"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="transition-opacity duration-200 ease-in-out"
+          leave="transition-opacity duration-300 ease-in-out"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -162,7 +162,7 @@ export default function ShowModal({ show }: ShowModalProps) {
               enter="transition-all transform duration-200 ease-in-out"
               enterFrom="translate-y-full opacity-0"
               enterTo="translate-y-0 opacity-100"
-              leave="transition-all transform duration-200 ease-in-out"
+              leave="transition-all transform duration-300 ease-in-out"
               leaveFrom="translate-y-0 opacity-100"
               leaveTo="translate-y-full opacity-0"
             >

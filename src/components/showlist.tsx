@@ -19,7 +19,7 @@ interface ShowListProps {
 const ShowList: React.FC<ShowListProps> = ({ show }) => {
   return (
     <>
-      <Link href={`/shows/${show.id}`}>
+      <Link href={`/shows/${show.id}`} scroll={false}>
         <div className="relative">
           <PosterImage
             src={show.poster?.src || "/video-poster-placeholder-image.jpg"}
