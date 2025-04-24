@@ -314,7 +314,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                 <div className="seasons pt-[60px]  max-w-[1008px] w-full relative">
                   {isLoading ? (
                     <div className="px-10">
-                      <div className="flex gap-[0_20px]">
+                      <div className="flex gap-[0_20px] w-[200px]">
                         {Array.from({ length: 2 }).map((_, index) => (
                           <Skeleton
                             key={index}

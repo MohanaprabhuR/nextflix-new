@@ -136,9 +136,9 @@ export default function HomeClient({
                   <h2 className="pb-6 text-black text-2xl font-semibold leading-[115%]">
                     {list.carousel_name}
                   </h2>
-                  <div className="w-[92px] h-[341px] opacity-[0.67] z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute left-0 rotate-180 bottom-0"></div>
+                  <div className="w-[92px] h-[341px] opacity-[0.67] z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute left-0 rotate-180 bottom-16"></div>
                   <Showcarousal shows={list.shows} />
-                  <div className="w-[92px] z-10 h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 bottom-0"></div>
+                  <div className="w-[92px] z-10 h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 bottom-16"></div>
                 </div>
               </section>
             </div>
