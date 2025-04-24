@@ -98,7 +98,6 @@ export default function HomeClient({
   const herocarousel: herocarousel[] = heroCarousel.data?.data || [];
   const showcarousel: showcarousel[] = heroCarousel.data?.data || [];
 
-  console.log("shows", shows);
   const isLoading =
     showsQuery.isLoading || herocarousel.isLoading || showcarousel.isLoading;
   const isError =

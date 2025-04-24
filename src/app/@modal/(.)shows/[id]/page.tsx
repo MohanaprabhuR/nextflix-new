@@ -8,5 +8,7 @@ export default async function Page({ params }: { params: Params }) {
   );
   const show = await res.json();
 
-  return <ShowModal show={show.data} />;
+  const bannerDetails = show?.data?.banner;
+
+  return <ShowModal show={bannerDetails} />;
 }

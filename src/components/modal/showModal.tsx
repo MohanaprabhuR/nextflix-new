@@ -10,6 +10,9 @@ import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 import _ from "lodash";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { fetchShowsData } from "@/utils/fetchData";
+import { useQuery } from "@tanstack/react-query";
 
 interface Video {
   video_poster_hash: string;
@@ -21,6 +24,17 @@ interface Video {
   original_air_date: string;
 }
 
+interface Show {
+  id: number;
+  name: string;
+  release_year: number;
+  poster?: { src: string };
+  src: string;
+}
+
+interface ApiResponse {
+  genres: { data: Genre[] };
+}
 interface Genre {
   id: string;
   name: string;
@@ -64,7 +78,8 @@ interface ShowModalProps {
   show: Show;
 }
 
-export default function ShowModal({ show }: ShowModalProps) {
+export default function ShowModal({ show, initialData }: ShowModalProps) {
+  const { id } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedSeason, setSelectedSeason] = useState<string>("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -75,6 +90,37 @@ export default function ShowModal({ show }: ShowModalProps) {
     { loop: true, duration: 20 },
     [Autoplay({ delay: 3000, stopOnInteraction: false }), Fade()]
   );
+
+  const { data } = useQuery<ApiResponse, Error>({
+    queryKey: ["shows", id],
+    queryFn: async (): Promise<ApiResponse> => {
+      try {
+        const [shows] = await Promise.all([fetchShowsData(id as string)]);
+        return { shows };
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+        if (initialData) return initialData;
+        throw err;
+      }
+    },
+    staleTime: 5 * 60 * 1000,
+    initialData,
+  });
+  const fetchshow = data?.shows?.data;
+
+  const groupedVideos = useMemo(() => {
+    return _.groupBy(fetchshow?.videos ?? [], "season");
+  }, [fetchshow?.videos]);
+  const seasons = useMemo(
+    () => _.sortBy(Object.keys(groupedVideos)),
+    [groupedVideos]
+  );
+
+  useEffect(() => {
+    if (seasons.length > 0) setSelectedSeason(seasons[0]);
+  }, [seasons]);
+
+  const router = useRouter();
 
   const onDotClick = useCallback(
     (index: number) => {
@@ -105,21 +151,6 @@ export default function ShowModal({ show }: ShowModalProps) {
       emblaApi.off("select", onSelect);
     };
   }, [emblaApi, onInit, onSelect]);
-
-  const groupedVideos = useMemo(
-    () => _.groupBy(show.videos, "season"),
-    [show.videos]
-  );
-  const seasons = useMemo(
-    () => _.sortBy(Object.keys(groupedVideos)),
-    [groupedVideos]
-  );
-
-  useEffect(() => {
-    if (seasons.length > 0) setSelectedSeason(seasons[0]);
-  }, [seasons]);
-
-  const router = useRouter();
 
   const closeModal = () => {
     setIsOpen(false);
@@ -190,11 +221,8 @@ export default function ShowModal({ show }: ShowModalProps) {
                 </button>
                 <div className="relative">
                   <Image
-                    src={
-                      show?.banner?.src || "/video-poster-placeholder-image.jpg"
-                    }
-                    alt={show?.name}
-                    hash={show?.banner?.hash}
+                    src={show?.src || "/video-poster-placeholder-image.jpg"}
+                    alt={fetchshow?.name || "Show banner image"}
                     width={1920}
                     height={500}
                     className={`w-full h-[500px] object-cover object-center ${
@@ -208,10 +236,10 @@ export default function ShowModal({ show }: ShowModalProps) {
                       <div className="w-full max-w-2xl">
                         <div className="flex gap-[0_8px] pb-2">
                           <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 ">
-                            {show?.release_year}
+                            {fetchshow?.release_year}
                           </p>
                           <ul className="flex gap-[0_8px] ">
-                            {show?.genres?.map((genre: Genre) => (
+                            {fetchshow?.genres?.map((genre: Genre) => (
                               <li
                                 key={genre.id}
                                 className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer"
@@ -222,7 +250,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                           </ul>
                         </div>
                         <p className="text-white text-[15px] font-normal leading-[150%] tracking-[0.15px]">
-                          {show?.description}
+                          {fetchshow?.description}
                         </p>
                       </div>
                       <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4">
@@ -280,8 +308,8 @@ export default function ShowModal({ show }: ShowModalProps) {
                             className="w-full max-w-[296px] flex-none group"
                           >
                             <Link
-                              href={`/shows/${show.id}/videos/${video.id}`}
-                              as={`/shows/${show.id}/videos/${video.id}`}
+                              href={`/shows/${id}/videos/${video.id}`}
+                              as={`/shows/${id}/videos/${video.id}`}
                               scroll={false}
                               prefetch={false}
                             >
@@ -291,7 +319,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                                     video.poster ||
                                     "/video-poster-placeholder-image.jpg"
                                   }
-                                  alt={video.name}
+                                  alt={`${video.name} - Episode thumbnail`}
                                   width={296}
                                   height={173}
                                   className={`object-cover rounded-xl group-hover:scale-[1.03] delay-100 transition-all duration-200 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
@@ -344,13 +372,13 @@ export default function ShowModal({ show }: ShowModalProps) {
                 <div className="flex justify-between pt-20 px-10">
                   <div className="flex flex-col gap-4 w-full max-w-[608px]">
                     <h2 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px]">
-                      {show?.name}
+                      {fetchshow?.name}
                     </h2>
                     <p className="text-[#484848] text-base font-[410] leading-[160%] tracking-[0.4px]">
-                      {show?.description}
+                      {fetchshow?.description}
                     </p>
                     <ul className="flex gap-[0_8px]">
-                      {show?.genres?.map((genre: Genre) => (
+                      {fetchshow?.genres?.map((genre: Genre) => (
                         <li key={genre.id}>
                           <Link
                             className="bg-[#F7F7F7] text-[#8B8787] text-sm font-[430] leading-[100%] tracking-[0.35px] px-2.5 py-1.5 rounded-[8px]"
@@ -363,7 +391,7 @@ export default function ShowModal({ show }: ShowModalProps) {
                     </ul>
                   </div>
                   <div className="flex justify-center items-center flex-col">
-                    {show?.accolades?.length > 1 && (
+                    {fetchshow?.accolades?.length > 1 && (
                       <>
                         <figure>
                           <svg
