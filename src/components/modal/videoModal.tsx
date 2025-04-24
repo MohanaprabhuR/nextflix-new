@@ -16,7 +16,9 @@ export default function VideoModal({ isOpen, showId }) {
 
   const closeModal = () => {
     setPlaying(false);
-    router.back();
+    setTimeout(() => {
+      router.back();
+    }, 200);
   };
 
   useEffect(() => {

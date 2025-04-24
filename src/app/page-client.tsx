@@ -132,12 +132,11 @@ export default function HomeClient({
           return (
             <div key={list.id}>
               <section className="overflow-hidden relative">
-                <div className="w-full max-w-[1332px] mx-auto px-4 pt-20">
+                <div className="w-full max-w-[1332px] mx-auto px-4 py-20">
                   <h2 className="pb-6 text-black text-2xl font-semibold leading-[115%]">
                     {list.carousel_name}
                   </h2>
                   <div className="w-[92px] h-[341px] opacity-[0.67] z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute left-0 rotate-180 bottom-0"></div>
-
                   <Showcarousal shows={list.shows} />
                   <div className="w-[92px] z-10 h-[341px] opacity-[0.67] bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_50%,#FFF_100%)] absolute right-0 bottom-0"></div>
                 </div>
