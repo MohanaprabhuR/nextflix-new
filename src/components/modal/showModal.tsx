@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { fetchShowsData } from "@/utils/fetchData";
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from "@/components/loader/skeleton";
 
 interface Video {
   video_poster_hash: string;
@@ -91,7 +92,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
     [Autoplay({ delay: 3000, stopOnInteraction: false }), Fade()]
   );
 
-  const { data } = useQuery<ApiResponse, Error>({
+  const { data, isLoading } = useQuery<ApiResponse, Error>({
     queryKey: ["shows", id],
     queryFn: async (): Promise<ApiResponse> => {
       try {
@@ -233,49 +234,97 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
 
                   <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)]  backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
                     <div className="flex justify-between items-end">
-                      <div className="w-full max-w-2xl">
-                        <div className="flex gap-[0_8px] pb-2">
-                          <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 ">
-                            {fetchshow?.release_year}
-                          </p>
-                          <ul className="flex gap-[0_8px] ">
-                            {fetchshow?.genres?.map((genre: Genre) => (
-                              <li
-                                key={genre.id}
-                                className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer"
-                              >
-                                {genre?.name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <p className="text-white text-[15px] font-normal leading-[150%] tracking-[0.15px]">
-                          {fetchshow?.description}
-                        </p>
-                      </div>
-                      <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4">
-                        <figure>
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M4.62197 1.18373C3.7071 0.591749 2.5 1.24844 2.5 2.33813V9.66185C2.5 10.7515 3.7071 11.4082 4.62197 10.8162L10.2812 7.1544C11.1186 6.61255 11.1186 5.3874 10.2812 4.84558L4.62197 1.18373Z"
-                              fill="black"
+                      {isLoading ? (
+                        <div className="w-1/2 space-y-2 animate-pulse">
+                          {[
+                            {
+                              height: "h-2",
+                              width: "w-full",
+                              className: "mb-4 ",
+                            },
+                            {
+                              height: "h-10",
+                              width: "w-5/6",
+                              className: "mb-4 ",
+                            },
+                          ].map((props, index) => (
+                            <Skeleton
+                              key={index}
+                              height={props.height}
+                              width={props.width}
+                              color="bg-white/10"
+                              className={props.className}
                             />
-                          </svg>
-                        </figure>
-                        Watch Now
-                      </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="w-full max-w-2xl">
+                          <div className="flex gap-[0_8px] pb-2">
+                            <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 ">
+                              {fetchshow?.release_year}
+                            </p>
+                            <ul className="flex gap-[0_8px] ">
+                              {fetchshow?.genres?.map((genre: Genre) => (
+                                <li
+                                  key={genre.id}
+                                  className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer"
+                                >
+                                  {genre?.name}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <p className="text-white text-[15px] font-normal leading-[150%] tracking-[0.15px]">
+                            {fetchshow?.description}
+                          </p>
+                        </div>
+                      )}
+                      {isLoading ? (
+                        <div className="animate-pulse w-[220px]">
+                          <Skeleton
+                            height="h-10"
+                            color="bg-white/10"
+                            className="mb-4 "
+                            width="w-full"
+                          />
+                        </div>
+                      ) : (
+                        <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4">
+                          <figure>
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 12 12"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M4.62197 1.18373C3.7071 0.591749 2.5 1.24844 2.5 2.33813V9.66185C2.5 10.7515 3.7071 11.4082 4.62197 10.8162L10.2812 7.1544C11.1186 6.61255 11.1186 5.3874 10.2812 4.84558L4.62197 1.18373Z"
+                                fill="black"
+                              />
+                            </svg>
+                          </figure>
+                          Watch Now
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 <div className="seasons pt-[60px]  max-w-[1008px] w-full relative">
-                  {seasons.length > 1 ? (
+                  {isLoading ? (
+                    <div className="px-10">
+                      <div className="flex gap-[0_20px]">
+                        {Array.from({ length: 2 }).map((_, index) => (
+                          <Skeleton
+                            key={index}
+                            height="h-6"
+                            width="w-[100px]"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : seasons.length ? (
                     <div className="px-10">
                       <nav className="flex gap-[0_20px]" aria-label="Seasons">
                         {seasons.map((season: string) => (
@@ -293,76 +342,93 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                         ))}
                       </nav>
                     </div>
-                  ) : (
-                    <h3 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px] px-10">
-                      Season {seasons[0]}
-                    </h3>
-                  )}
+                  ) : null}
+
                   <div className="embla pt-6 overflow-hidden relative">
                     <div className="w-8 h-full rotate-180 z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute left-0 bottom-0"></div>
                     <div className="embla__viewport px-10" ref={emblaRef}>
                       <div className="embla__container flex gap-[0_9px] is-draggable">
-                        {groupedVideos[selectedSeason]?.map((video: Video) => (
-                          <div
-                            key={video.id}
-                            className="w-full max-w-[296px] flex-none group"
-                          >
-                            <Link
-                              href={`/shows/${id}/videos/${video.id}`}
-                              as={`/shows/${id}/videos/${video.id}`}
-                              scroll={false}
-                              prefetch={false}
-                            >
-                              <div className="relative flex items-center justify-center">
-                                <Image
-                                  src={
-                                    video.poster ||
-                                    "/video-poster-placeholder-image.jpg"
-                                  }
-                                  alt={`${video.name} - Episode thumbnail`}
-                                  width={296}
-                                  height={173}
-                                  className={`object-cover rounded-xl group-hover:scale-[1.03] delay-100 transition-all duration-200 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
-                                    isLoaded ? "opacity-100" : "opacity-0"
-                                  }`}
-                                  onLoad={() => setIsLoaded(true)}
-                                />
-
-                                <div className="absolute delay-100 duration-200 transition-all ease-in-out opacity-0 group-hover:opacity-100 w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="11"
-                                    height="14"
-                                    viewBox="0 0 11 14"
-                                    fill="none"
-                                  >
-                                    <path
-                                      fillRule="evenodd"
-                                      clipRule="evenodd"
-                                      d="M0.166859 0.342528C-3.92621e-07 0.570901 0 0.97997 0 1.79811V12.2019C0 13.02 -3.92621e-07 13.4291 0.166859 13.6575C0.312269 13.8565 0.534852 13.981 0.776864 13.9987C1.05457 14.019 1.39039 13.7978 2.06203 13.3554L9.95916 8.15353C10.542 7.76962 10.8334 7.57767 10.934 7.33359C11.022 7.12032 11.022 6.87967 10.934 6.66641C10.8334 6.42233 10.542 6.23038 9.95916 5.84647L2.06204 0.644582C1.3904 0.202167 1.05457 -0.0190398 0.776864 0.00128416C0.534852 0.0189958 0.312269 0.143511 0.166859 0.342528Z"
-                                      fill="white"
-                                    />
-                                  </svg>
+                        {isLoading
+                          ? Array.from({ length: 4 }).map((_, index) => (
+                              <div
+                                key={index}
+                                className="w-full max-w-[296px] flex-none"
+                              >
+                                <div className="relative">
+                                  <Skeleton
+                                    height="h-[173px]"
+                                    width="w-full"
+                                    className=""
+                                  />
+                                </div>
+                                <div className="pt-6 space-y-3">
+                                  <Skeleton height="h-4" width="w-3/4" />
+                                  <Skeleton height="h-4" width="w-full" />
                                 </div>
                               </div>
-                            </Link>
-                            <div className="pt-6">
-                              <h2 className="text-black text-base font-[430] leading-[100%] tracking-[0.4px]">
-                                {video.name}
-                              </h2>
-                              <p className="text-[#8B8787] text-sm font-[410] leading-[150%] tracking-[0.35px] pt-2 pb-3">
-                                {_.truncate(video.description, {
-                                  length: 80,
-                                  separator: " ",
-                                  omission: "...",
-                                })}
-                              </p>
-                              <p className="text-[#8B8787] text-[13px] font-normal leading-[100%] tracking-[0.13px]">
-                                {video.original_air_date}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
+                            ))
+                          : groupedVideos[selectedSeason]?.map(
+                              (video: Video) => (
+                                <div
+                                  key={video.id}
+                                  className="w-full max-w-[296px] flex-none group"
+                                >
+                                  <Link
+                                    href={`/shows/${id}/videos/${video.id}`}
+                                    as={`/shows/${id}/videos/${video.id}`}
+                                    scroll={false}
+                                    prefetch={false}
+                                  >
+                                    <div className="relative flex items-center justify-center">
+                                      <Image
+                                        src={
+                                          video.poster ||
+                                          "/video-poster-placeholder-image.jpg"
+                                        }
+                                        alt={`${video.name} - Episode thumbnail`}
+                                        width={296}
+                                        height={173}
+                                        className={`object-cover rounded-xl group-hover:scale-[1.03] delay-100 transition-all duration-200 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
+                                          isLoaded ? "opacity-100" : "opacity-0"
+                                        }`}
+                                        onLoad={() => setIsLoaded(true)}
+                                      />
+                                      <div className="absolute delay-100 duration-200 transition-all ease-in-out opacity-0 group-hover:opacity-100 w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="11"
+                                          height="14"
+                                          viewBox="0 0 11 14"
+                                          fill="none"
+                                        >
+                                          <path
+                                            fillRule="evenodd"
+                                            clipRule="evenodd"
+                                            d="M0.166859 0.342528C-3.92621e-07 0.570901 0 0.97997 0 1.79811V12.2019C0 13.02 -3.92621e-07 13.4291 0.166859 13.6575C0.312269 13.8565 0.534852 13.981 0.776864 13.9987C1.05457 14.019 1.39039 13.7978 2.06203 13.3554L9.95916 8.15353C10.542 7.76962 10.8334 7.57767 10.934 7.33359C11.022 7.12032 11.022 6.87967 10.934 6.66641C10.8334 6.42233 10.542 6.23038 9.95916 5.84647L2.06204 0.644582C1.3904 0.202167 1.05457 -0.0190398 0.776864 0.00128416C0.534852 0.0189958 0.312269 0.143511 0.166859 0.342528Z"
+                                            fill="white"
+                                          />
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  </Link>
+                                  <div className="pt-6">
+                                    <h2 className="text-black text-base font-[430] leading-[100%] tracking-[0.4px]">
+                                      {video.name}
+                                    </h2>
+                                    <p className="text-[#8B8787] text-sm font-[410] leading-[150%] tracking-[0.35px] pt-2 pb-3">
+                                      {_.truncate(video.description, {
+                                        length: 80,
+                                        separator: " ",
+                                        omission: "...",
+                                      })}
+                                    </p>
+                                    <p className="text-[#8B8787] text-[13px] font-normal leading-[100%] tracking-[0.13px]">
+                                      {video.original_air_date}
+                                    </p>
+                                  </div>
+                                </div>
+                              )
+                            )}
                       </div>
                     </div>
                     <div className="w-8 z-10 h-full bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute right-0 bottom-0"></div>
@@ -370,26 +436,61 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                 </div>
 
                 <div className="flex justify-between pt-20 px-10">
-                  <div className="flex flex-col gap-4 w-full max-w-[608px]">
-                    <h2 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px]">
-                      {fetchshow?.name}
-                    </h2>
-                    <p className="text-[#484848] text-base font-[410] leading-[160%] tracking-[0.4px]">
-                      {fetchshow?.description}
-                    </p>
-                    <ul className="flex gap-[0_8px]">
-                      {fetchshow?.genres?.map((genre: Genre) => (
-                        <li key={genre.id}>
-                          <Link
-                            className="bg-[#F7F7F7] text-[#8B8787] text-sm font-[430] leading-[100%] tracking-[0.35px] px-2.5 py-1.5 rounded-[8px]"
-                            href={`/genres/${genre.id}`}
-                          >
-                            {genre.name}
-                          </Link>
-                        </li>
+                  {isLoading ? (
+                    <div className="w-1/2 space-y-2 animate-pulse">
+                      {[
+                        {
+                          height: "h-2",
+                          width: "w-full",
+                          className: "mb-2 ",
+                        },
+                        {
+                          height: "h-10",
+                          width: "w-5/6",
+                          className: "mb-4 ",
+                        },
+                      ].map((props, index) => (
+                        <Skeleton
+                          key={index}
+                          height={props.height}
+                          width={props.width}
+                          className={props.className}
+                        />
                       ))}
-                    </ul>
-                  </div>
+                      <div className="flex gap-[0_20px]">
+                        {Array.from({ length: 2 }).map((_, index) => (
+                          <Skeleton
+                            key={index}
+                            height="h-6"
+                            width="w-[100px]"
+                            className=""
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-4 w-full max-w-[608px]">
+                      <h2 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px]">
+                        {fetchshow?.name}
+                      </h2>
+                      <p className="text-[#484848] text-base font-[410] leading-[160%] tracking-[0.4px]">
+                        {fetchshow?.description}
+                      </p>
+                      <ul className="flex gap-[0_8px]">
+                        {fetchshow?.genres?.map((genre: Genre) => (
+                          <li key={genre.id}>
+                            <Link
+                              className="bg-[#F7F7F7] text-[#8B8787] text-sm font-[430] leading-[100%] tracking-[0.35px] px-2.5 py-1.5 rounded-[8px]"
+                              href={`/genres/${genre.id}`}
+                            >
+                              {genre.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   <div className="flex justify-center items-center flex-col">
                     {fetchshow?.accolades?.length > 1 && (
                       <>
