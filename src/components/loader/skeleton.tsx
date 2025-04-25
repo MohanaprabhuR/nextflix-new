@@ -6,7 +6,7 @@ interface SkeletonProps {
   className?: string;
   height?: string;
   color?: string;
-  width?: any;
+  width?: string;
 }
 
 const Skeleton: React.FC<SkeletonProps> = ({

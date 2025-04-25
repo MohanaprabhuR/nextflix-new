@@ -57,7 +57,6 @@ export default function PosterImage({
         }`}
         aria-hidden
       />
-
       <Image
         src={src}
         alt={alt}

@@ -130,10 +130,12 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
     [emblaApi]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onInit = useCallback((emblaApi: any) => {
     setScrollSnaps(emblaApi.scrollSnapList());
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSelect = useCallback((emblaApi: any) => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
@@ -170,7 +172,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  });
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
