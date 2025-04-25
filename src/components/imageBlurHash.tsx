@@ -49,7 +49,7 @@ export default function PosterImage({
   }, [hash]);
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <canvas
         ref={canvasRef}
         width={width}
