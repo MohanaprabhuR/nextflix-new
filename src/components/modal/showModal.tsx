@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import { fetchShowsData } from "@/utils/fetchData";
 import { useQuery } from "@tanstack/react-query";
 import Skeleton from "@/components/loader/skeleton";
+import PosterImage from "@/components/imageBlurHash";
 
 interface Video {
   video_poster_hash: string;
@@ -223,15 +224,15 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                   </svg>
                 </button>
                 <div className="relative">
-                  <Image
+                  <PosterImage
                     src={show?.src || "/video-poster-placeholder-image.jpg"}
                     alt={fetchshow?.name || "Show banner image"}
+                    hash={show?.hash}
                     width={1920}
                     height={500}
-                    className={`w-full h-[500px] object-cover object-center ${
+                    className={`w-full h-[500px] object-cover object-center  ${
                       isLoaded ? "opacity-100" : "opacity-0"
                     }`}
-                    onLoad={() => setIsLoaded(true)}
                   />
 
                   <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)]  backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
@@ -390,7 +391,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                                         alt={`${video.name} - Episode thumbnail`}
                                         width={296}
                                         height={173}
-                                        className={`object-cover rounded-xl group-hover:scale-[1.03] delay-100 transition-all duration-200 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
+                                        className={`object-cover rounded-xl group-hover:scale-[1.03] delay-100 transition-all duration-300 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
                                           isLoaded ? "opacity-100" : "opacity-0"
                                         }`}
                                         onLoad={() => setIsLoaded(true)}

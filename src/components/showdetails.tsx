@@ -9,6 +9,7 @@ import Link from "next/link";
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
+import PosterImage from "@/components/imageBlurHash";
 
 interface Video {
   video_poster_hash: string;
@@ -95,17 +96,17 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
   return (
     <div className="bg-white max-w-[1008px] w-full rounded-[16px_16px_0px_0px] overflow-hidden mx-auto pb-40 shadow-xl">
       <div className="relative">
-        <Image
+        <PosterImage
           src={show?.banner?.src || "/video-poster-placeholder-image.jpg"}
           alt={show?.name}
+          hash={show?.banner?.hash}
           width={1920}
           height={500}
-          className={`w-full h-[500px] object-cover object-center ${
+          className={`w-full h-[500px] object-cover object-center  ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setIsLoaded(true)}
         />
-
         <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
           <div className="flex justify-between items-end">
             <div className="w-full max-w-2xl">

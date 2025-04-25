@@ -30,12 +30,14 @@ export default function PosterImage({
   width,
   height,
   alt,
+  className = "",
 }: {
   src: string;
   hash: string;
   width: number;
   height: number;
   alt: string;
+  className: string;
 }) {
   const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -47,7 +49,7 @@ export default function PosterImage({
   }, [hash]);
 
   return (
-    <div className="relative overflow-hidden" style={{ width, height }}>
+    <div className="relative">
       <canvas
         ref={canvasRef}
         width={width}
@@ -65,8 +67,9 @@ export default function PosterImage({
         onLoad={() => setLoaded(true)}
         className={`w-full h-full object-cover transition-opacity duration-700 ${
           loaded ? "opacity-100 shadow-xl" : "opacity-0"
-        }`}
+        } ${className}`}
         priority
+        style={{ width, height }}
       />
     </div>
   );
