@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
 import { Dialog, Transition } from "@headlessui/react";
+import Image from "next/image";
 
 export default function VideoModal({ isOpen, showId }) {
   const [playing, setPlaying] = useState(false);
@@ -55,11 +56,21 @@ export default function VideoModal({ isOpen, showId }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-white/80 backdrop-blur-xl" />
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-xl" />
         </Transition.Child>
 
-        <div className="fixed inset-0 pt-16 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center max-w-[1008px] mx-auto px-4">
+        <div className="fixed inset-0 overflow-y-auto">
+          <div style={{ position: "absolute", width: "100%", height: "100vh" }}>
+            <Image
+              src={video?.poster}
+              alt={video?.name}
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+            />
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-xl z-[1]" />
+          </div>
+          <div className="flex min-h-full items-center justify-center max-w-[1008px] mx-auto px-4 z-[2] relative">
             <Transition.Child
               as={Fragment}
               enter="transition-all transform duration-200 ease-in-out"

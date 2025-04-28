@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ReactPlayer from "react-player";
+import Image from "next/image";
 
 export default function VideoDetails({ isOpen, showId }) {
   const [playing, setPlaying] = useState(false);
@@ -41,58 +42,44 @@ export default function VideoDetails({ isOpen, showId }) {
   const video = show?.data?.videos?.find((list) => String(list.id) === videoId);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center w-full h-screen bg-[rgba(0,0,0,0.7)] backdrop-blur-[100px]">
-      <div className="relative w-[1008px] h-[567px]">
-        {error && <p className="text-red-500">{error}</p>}
-        {video ? (
-          <div className="relative w-full h-full">
-            <ReactPlayer
-              className="rounded-2xl overflow-hidden"
-              url={
-                video?.video_poster_hash?.startsWith("http")
-                  ? video.video_poster_hash
-                  : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
-              }
-              controls
-              width="100%"
-              height="100%"
-              playing={playing}
-              light={video?.poster}
-              onClickPreview={() => setPlaying(true)}
-            />
-
-            <div className="pointer-events-none absolute inset-0 z-[-1] blur-[100px] saturate-[300%] transition-opacity duration-500 ease-in-out">
-              {!playing ? (
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url(${video?.poster})`,
-                    filter: "blur(80px) brightness(0.5)",
-                  }}
-                />
-              ) : (
-                <ReactPlayer
-                  url={
-                    video?.video_poster_hash?.startsWith("http")
-                      ? video.video_poster_hash
-                      : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
-                  }
-                  muted
-                  width="100%"
-                  height="100%"
-                  playing
-                  loop
-                  controls={false}
-                />
-              )}
+    <>
+      <div className="fixed inset-0 flex items-center justify-center w-full h-screen bg-[rgba(0,0,0,0.7)] backdrop-blur-[100px]">
+        <div style={{ position: "absolute", width: "100%", height: "100vh" }}>
+          <Image
+            src={video?.poster}
+            alt={video?.name}
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+          />
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-xl z-[1]" />
+        </div>
+        <div className="relative w-[1008px] h-[567px] z-[2]">
+          {error && <p className="text-red-500">{error}</p>}
+          {video ? (
+            <div className="relative w-full h-full">
+              <ReactPlayer
+                className="rounded-2xl overflow-hidden"
+                url={
+                  video?.video_poster_hash?.startsWith("http")
+                    ? video.video_poster_hash
+                    : "https://www.youtube.com/watch?v=m-qO_4m77Jk"
+                }
+                controls
+                width="100%"
+                height="100%"
+                playing={playing}
+                light={video?.poster}
+                onClickPreview={() => setPlaying(true)}
+              />
             </div>
-          </div>
-        ) : (
-          <div className=" h-fullh-full absolute -translate-x-2/4 -translate-y-2/4 flex items-center left-2/4 top-2/4">
-            <div className="w-10 h-10 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
+          ) : (
+            <div className=" h-fullh-full absolute -translate-x-2/4 -translate-y-2/4 flex items-center left-2/4 top-2/4">
+              <div className="w-10 h-10 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

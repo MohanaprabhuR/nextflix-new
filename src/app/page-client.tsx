@@ -125,7 +125,7 @@ export default function HomeClient({
   const showCarousal = showCarousel?.data?.data?.show_carousel;
 
   return (
-    <div>
+    <div className="pt-16">
       <HeroCarousal shows={shows} heroCarousel={heroCarousalShows} />
       <div className=" pb-5">
         {showCarousal?.map((list) => {
