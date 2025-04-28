@@ -49,7 +49,11 @@ export default function HeaderClient({
   const isVideoPage = pathname.includes("/videos/");
 
   return (
-    <header className="pt-4 pb-5 fixed top-0 z-50 w-full  header  transition-all ease-in-out before:z-[5]  before:absolute before:inset-0 before:h-full before:w-full before:backdrop-blur-xl">
+    <header
+      className={`pt-4 pb-5 fixed top-0 z-50 w-full header transition-all ease-in-out backdrop-saturate-[180%] backdrop-blur-[5px] 
+    ${isVideoPage ? "bg-[rgba(0,0,0,0.1)]" : "bg-[rgba(255,255,255,0.8)]"}
+  `}
+    >
       <div className="w-full max-w-[1332px] mx-auto px-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-5">
           <Link href="/">
