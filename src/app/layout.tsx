@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className=" pb-[64px]">
+      <body className=" pb-[64px] max-sm:pb-[40px]">
         <TanstackProvider>
           <Header />
           {children}

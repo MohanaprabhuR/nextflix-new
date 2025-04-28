@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PosterImage from "./imageBlurHash";
 
 interface Show {
@@ -17,6 +17,20 @@ interface ShowListProps {
 }
 
 const ShowList: React.FC<ShowListProps> = ({ show }) => {
+  const [size, setSize] = useState({ width: 200, height: 300 });
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setSize({ width: 155, height: 225 });
+      } else {
+        setSize({ width: 200, height: 300 });
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
       <Link href={`/shows/${show.id}`} scroll={false}>
@@ -24,9 +38,9 @@ const ShowList: React.FC<ShowListProps> = ({ show }) => {
           <PosterImage
             src={show.poster?.src || "/video-poster-placeholder-image.jpg"}
             alt={show.name}
-            width={200}
-            height={300}
             hash={show.poster?.hash || ""}
+            width={size.width}
+            height={size.height}
           />
         </div>
       </Link>

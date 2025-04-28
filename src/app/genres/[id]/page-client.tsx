@@ -59,12 +59,15 @@ export default function CategoryClient({
         {data?.genres?.data?.name}
       </h2>
 
-      <div className="flex flex-wrap gap-16 pt-6">
+      <div className="flex flex-wrap gap-16 pt-6  max-lg:gap-10 max-sm:justify-between max-sm:gap-[24px]">
         {data?.genres?.data?.shows?.map((show: Show) => {
           const matchedShow = data?.shows?.data?.find((s) => s.id === show.id);
 
           return matchedShow ? (
-            <div key={matchedShow.id} className="w-full max-w-[200px]">
+            <div
+              key={matchedShow.id}
+              className="w-full max-w-[200px] max-sm:max-w-[45%]"
+            >
               <Showlist show={matchedShow} />
             </div>
           ) : null;

@@ -31,6 +31,7 @@ export default function PosterImage({
   height,
   alt,
   className = "",
+  layout,
 }: {
   src: string;
   hash: string;
@@ -38,6 +39,7 @@ export default function PosterImage({
   height: number;
   alt: string;
   className: string;
+  layout: string;
 }) {
   const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -70,6 +72,8 @@ export default function PosterImage({
         } ${className}`}
         priority
         style={{ width, height }}
+        objectFit="cover"
+        layout={layout}
       />
     </div>
   );
