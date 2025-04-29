@@ -59,7 +59,7 @@ export default function VideoDetails({ isOpen, showId }) {
           {video ? (
             <div className="relative w-full h-full">
               <ReactPlayer
-                className="rounded-2xl overflow-hidden"
+                className="rounded-2xl overflow-hidden max-md:rounded-xl"
                 url={
                   video?.video_poster_hash?.startsWith("http")
                     ? video.video_poster_hash

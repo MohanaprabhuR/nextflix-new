@@ -191,7 +191,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
         </Transition.Child>
 
         <div className="fixed inset-0 pt-[60px]  overflow-y-auto ">
-          <div className="flex min-h-full items-center justify-center max-w-[1008px] mx-auto w-full">
+          <div className="flex min-h-full items-center justify-center max-w-[1008px] mx-auto w-full   max-lg:max-w-[90%] max-sm:max-w-[92%]">
             <Transition.Child
               as={Fragment}
               enter="transition-all transform duration-200 ease-in-out"
@@ -201,7 +201,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
               leaveFrom="translate-y-0 opacity-100"
               leaveTo="translate-y-full opacity-0"
             >
-              <Dialog.Panel className="w-full  transform overflow-hidden rounded-[16px_16px_0px_0px] bg-white  shadow-xl transition-all pb-40">
+              <Dialog.Panel className="w-full  transform overflow-hidden rounded-[16px_16px_0px_0px] bg-white  shadow-xl transition-all pb-40 max-sm:pb-20 ">
                 <button
                   onClick={closeModal}
                   className="absolute top-3 z-[1] right-3 flex min-h-10 w-auto min-w-10 items-center justify-center rounded-full bg-black/[0.58] text-2xl text-white outline-hidden transition-all ease-in-out hover:scale-110 data-focus-visible:ring-2 data-focus-visible:ring-[#ECB03F] supports-backdrop-filter:backdrop-blur-xl"
@@ -230,13 +230,14 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                     hash={show?.hash}
                     width={1920}
                     height={500}
+                    layout="responsive"
                     className={`w-full h-[500px] object-cover object-center  ${
                       isLoaded ? "opacity-100" : "opacity-0"
                     }`}
                   />
 
-                  <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)]  backdrop-blur-[13px] absolute bottom-0 left-0 w-full">
-                    <div className="flex justify-between items-end">
+                  <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)]  backdrop-blur-[13px] absolute bottom-0 left-0 w-full max-md:relative max-lg:p-5">
+                    <div className="flex justify-between items-end max-lg:flex-wrap max-lg:gap-[16px_0]">
                       {isLoading ? (
                         <div className="w-1/2 space-y-2 animate-pulse">
                           {[
@@ -261,23 +262,23 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                           ))}
                         </div>
                       ) : (
-                        <div className="w-full max-w-2xl">
-                          <div className="flex gap-[0_8px] pb-2">
-                            <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 ">
+                        <div className="w-full max-w-2xl max-lg:max-w-full max-sm:flex-wrap   ">
+                          <div className="flex gap-[0_8px] pb-2 max-sm:flex-col max-sm:flex-wrap max-sm:gap-2">
+                            <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 max-md:text-black">
                               {fetchshow?.release_year}
                             </p>
-                            <ul className="flex gap-[0_8px] ">
+                            <ul className="flex gap-[0_8px] max-sm:flex-wrap max-sm:gap-2">
                               {fetchshow?.genres?.map((genre: Genre) => (
                                 <li
                                   key={genre.id}
-                                  className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer"
+                                  className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer max-md:text-black"
                                 >
                                   {genre?.name}
                                 </li>
                               ))}
                             </ul>
                           </div>
-                          <p className="text-white text-[15px] font-normal leading-[150%] tracking-[0.15px]">
+                          <p className="text-white text-[15px] font-normal leading-[150%] tracking-[0.15px] max-md:text-black">
                             {fetchshow?.description}
                           </p>
                         </div>
@@ -292,7 +293,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                           />
                         </div>
                       ) : (
-                        <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4">
+                        <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4 max-sm:w-full max-sm:justify-center">
                           <figure>
                             <svg
                               width="12"
@@ -314,9 +315,9 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                   </div>
                 </div>
 
-                <div className="seasons pt-[60px]  max-w-[1008px] w-full relative">
+                <div className="seasons pt-[60px]  max-w-[1008px] w-full relative max-sm:pt-10">
                   {isLoading ? (
-                    <div className="px-10">
+                    <div className="px-10 max-sm:px-4 max-lg:px-6">
                       <div className="flex gap-[0_20px] w-[200px]">
                         {Array.from({ length: 2 }).map((_, index) => (
                           <Skeleton
@@ -328,13 +329,16 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                       </div>
                     </div>
                   ) : seasons.length ? (
-                    <div className="px-10">
-                      <nav className="flex gap-[0_20px]" aria-label="Seasons">
+                    <div className="px-10 max-sm:px-4 max-lg:px-6">
+                      <nav
+                        className="flex gap-[0_20px] max-sm:gap-[0_12px]"
+                        aria-label="Seasons"
+                      >
                         {seasons.map((season: string) => (
                           <button
                             key={season}
                             onClick={() => setSelectedSeason(season)}
-                            className={`text-black text-xl font-[660] leading-[102%] tracking-[0.3px] ${
+                            className={`text-black text-xl font-[660] leading-[102%] tracking-[0.3px] max-sm:text-base ${
                               selectedSeason === season
                                 ? "opacity-100"
                                 : "opacity-[0.35]"
@@ -345,11 +349,18 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                         ))}
                       </nav>
                     </div>
-                  ) : null}
+                  ) : (
+                    <h3 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px] px-10 max-sm:px-4 max-lg:px-6 max-sm:text-base">
+                      Season {seasons[0]}
+                    </h3>
+                  )}
 
-                  <div className="embla pt-6 overflow-hidden relative">
+                  <div className="embla pt-6 overflow-hidden relative max-sm:pt-4">
                     <div className="w-8 h-full rotate-180 z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.00)_-9.38%,#FFF_100%)] absolute left-0 bottom-0"></div>
-                    <div className="embla__viewport px-10" ref={emblaRef}>
+                    <div
+                      className="embla__viewport px-10 max-sm:px-4 max-lg:px-6"
+                      ref={emblaRef}
+                    >
                       <div className="embla__container flex gap-[0_9px] is-draggable">
                         {isLoading
                           ? Array.from({ length: 4 }).map((_, index) => (
@@ -374,7 +385,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                               (video: Video) => (
                                 <div
                                   key={video.id}
-                                  className="w-full max-w-[296px] flex-none group"
+                                  className="w-full max-w-[296px] flex-none group  max-sm:max-w-[220px]"
                                 >
                                   <Link
                                     href={`/shows/${id}/videos/${video.id}`}
@@ -438,7 +449,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                   </div>
                 </div>
 
-                <div className="flex justify-between pt-20 px-10">
+                <div className="flex justify-between pt-20 px-10 max-sm:px-4 max-sm:pt-16 max-md:flex-wrap">
                   {isLoading ? (
                     <div className="w-1/2 space-y-2 animate-pulse">
                       {[
@@ -472,7 +483,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col gap-4 w-full max-w-[608px]">
+                    <div className="flex flex-col gap-4 w-full max-w-[608px] max-md:max-w-full">
                       <h2 className="text-black text-xl font-[660] leading-[102%] tracking-[0.3px]">
                         {fetchshow?.name}
                       </h2>
@@ -494,7 +505,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                     </div>
                   )}
 
-                  <div className="flex justify-center items-center flex-col">
+                  <div className="flex justify-center items-center flex-col max-md:w-full">
                     {fetchshow?.accolades?.length > 1 && (
                       <>
                         <figure>

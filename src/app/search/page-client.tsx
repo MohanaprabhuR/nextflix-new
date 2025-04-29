@@ -59,7 +59,7 @@ export default function SearchClient({
   }
 
   return (
-    <div className="w-full max-w-[1332px] mx-auto px-4 pt-6">
+    <div className="w-full max-w-[1332px] mx-auto px-4 pt-[88px]">
       <input
         autoComplete="off"
         id="search"
@@ -75,10 +75,16 @@ export default function SearchClient({
         onChange={handleSearchChange}
       />
 
-      <div id="search-results" className="flex flex-wrap gap-16 pt-6">
+      <div
+        id="search-results"
+        className="flex flex-wrap gap-16 pt-6  max-lg:gap-10 max-sm:justify-between max-sm:gap-[24px]"
+      >
         {filteredShows.length > 0 ? (
           filteredShows.map((show) => (
-            <div key={show.id}>
+            <div
+              key={show.id}
+              className="w-full max-w-[200px] max-sm:max-w-[45%]"
+            >
               <Showlist show={show} />
             </div>
           ))

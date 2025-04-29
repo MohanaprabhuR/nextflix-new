@@ -110,12 +110,12 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
         />
         <div className="px-[48px] py-6 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)] backdrop-blur-[13px] absolute max-md:relative bottom-0 left-0 w-full max-lg:p-5 ">
           <div className="flex justify-between items-end max-lg:flex-wrap max-lg:gap-[16px_0]">
-            <div className="w-full max-w-2xl max-lg:max-w-full">
-              <div className="flex gap-[0_8px] pb-2">
+            <div className="w-full max-w-2xl max-lg:max-w-full max-sm:flex-wrap">
+              <div className="flex gap-[0_8px] pb-2 max-sm:flex-col max-sm:flex-wrap max-sm:gap-2 ">
                 <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 max-md:text-black">
                   {show?.release_year}
                 </p>
-                <ul className="flex gap-[0_8px]">
+                <ul className="flex gap-[0_8px] max-sm:flex-wrap max-sm:gap-2">
                   {show?.genres?.map((genre: Genre) => (
                     <li
                       key={genre.id}

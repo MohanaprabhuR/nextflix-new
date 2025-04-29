@@ -80,7 +80,7 @@ export default function VideoModal({ isOpen, showId }) {
               leaveFrom="translate-y-0 opacity-100"
               leaveTo="translate-y-full opacity-0"
             >
-              <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl bg-white shadow-xl transition-all relative">
+              <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl bg-white shadow-xl transition-all relative max-md:rounded-xl">
                 <button
                   onClick={closeModal}
                   className="absolute top-4 right-4 z-10 flex items-center justify-center rounded-full bg-black/60 text-white p-2 hover:scale-110 transition"
@@ -116,7 +116,7 @@ export default function VideoModal({ isOpen, showId }) {
                   )}
                   {video && (
                     <ReactPlayer
-                      className="rounded-t-2xl"
+                      className="rounded-t-2xl "
                       url={
                         video?.video_poster_hash?.startsWith("http")
                           ? video.video_poster_hash

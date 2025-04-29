@@ -54,7 +54,7 @@ export default function CategoryClient({
     return <div className="text-red-500">Error: {error?.message}</div>;
 
   return (
-    <div className="w-full max-w-[1332px] mx-auto px-4 pt-6">
+    <div className="w-full max-w-[1332px] mx-auto px-4 pt-[88px]">
       <h2 className="text-black text-2xl font-semibold leading-[115%]">
         {data?.genres?.data?.name}
       </h2>
