@@ -2,8 +2,8 @@
 import { useQueries } from "@tanstack/react-query";
 import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 interface Genre {
   id: number;
@@ -20,6 +20,16 @@ export default function HeaderClient({
   initialData: ApiResponse;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const allGenres: Genre[] = initialData.genres.data;
+  const initialVisible = allGenres.slice(0, 6);
+  const initialVisibleIds = new Set(initialVisible.map((g) => g.id));
+  const initialMore = allGenres.filter((g) => !initialVisibleIds.has(g.id));
+
+  const [visibleGenres, setVisibleGenres] = useState<Genre[]>(initialVisible);
+  const [moreGenres, setMoreGenres] = useState<Genre[]>(initialMore);
 
   const [genresQuery] = useQueries({
     queries: [
@@ -45,14 +55,29 @@ export default function HeaderClient({
       <div className="text-red-500 text-center mt-20">Error loading data.</div>
     );
   }
-
   const isVideoPage = pathname.includes("/videos/");
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
+  const handleGenreClick = (genre: Genre) => {
+    const updatedMoreGenres = moreGenres.filter((g) => g.id !== genre.id);
+    const updatedVisibleGenres = [...visibleGenres, genre];
+    let finalVisibleGenres = updatedVisibleGenres;
+    let newMoreGenres = updatedMoreGenres;
+
+    if (updatedVisibleGenres.length > 6) {
+      const [removed, ...rest] = updatedVisibleGenres;
+      finalVisibleGenres = rest;
+      newMoreGenres = [...updatedMoreGenres, removed];
+    }
+    setVisibleGenres(finalVisibleGenres);
+    setMoreGenres(newMoreGenres);
+    setIsDropdownOpen(false);
+    router.push(`/genres/${genre.id}`);
+  };
 
   return (
     <header
       className={`pt-4 pb-5 fixed top-0 z-50 w-full header transition-all ease-in-out backdrop-saturate-[180%] backdrop-blur-[5px] 
-    ${isVideoPage ? "bg-[rgba(0,0,0,0.1)]" : "bg-[rgba(255,255,255,0.8)]"}
-  `}
+      ${isVideoPage ? "bg-[rgba(0,0,0,0.1)]" : "bg-[rgba(255,255,255,0.8)]"}`}
     >
       <div className="w-full max-w-[1332px] mx-auto px-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-5">
@@ -74,21 +99,18 @@ export default function HeaderClient({
           </Link>
           <div>
             <ul className="flex items-center gap-4">
-              {genres.map((genre) => {
+              {visibleGenres.map((genre) => {
                 const isActive = pathname === `/genres/${genre.id}`;
                 return (
                   <li key={genre.id}>
                     <Link
                       href={`/genres/${genre.id}`}
-                      className={` text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200  ${
-                        isActive
-                          ? "text-black hover:text-black"
-                          : "text-[rgba(0,0,0,0.43)]"
-                      } ${
+                      className={`text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200 ${
                         isVideoPage
                           ? "text-white/50 hover:text-white"
+                          : isActive
+                          ? "text-black hover:text-black"
                           : "text-[rgba(0,0,0,0.43)]"
-                      }
                       }`}
                     >
                       {genre.name}
@@ -96,6 +118,41 @@ export default function HeaderClient({
                   </li>
                 );
               })}
+              {moreGenres.length > 0 && (
+                <li className="relative">
+                  <button
+                    onClick={toggleDropdown}
+                    className={`text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200 ${
+                      isVideoPage
+                        ? "text-white/50 hover:text-white"
+                        : "text-[rgba(0,0,0,0.43)]"
+                    }`}
+                  >
+                    More
+                  </button>
+                  {isDropdownOpen && (
+                    <ul className="absolute top-full left-0 mt-2 bg-white shadow-lg rounded-lg w-[200px] z-20">
+                      {moreGenres.map((genre) => {
+                        const isActive = pathname === `/genres/${genre.id}`;
+                        return (
+                          <li key={genre.id}>
+                            <button
+                              onClick={() => handleGenreClick(genre)}
+                              className={`block w-full text-left px-4 py-2 text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-200 ease-in-out delay-200 ${
+                                isActive
+                                  ? "text-black hover:text-black"
+                                  : "text-[rgba(0,0,0,0.43)] hover:text-black"
+                              }`}
+                            >
+                              {genre.name}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              )}
             </ul>
           </div>
         </div>
