@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/app/header";
+import Header from "@/app/header/header";
 import { TanstackProvider } from "@/app/provider/tanstackProvider";
 
 export const metadata: Metadata = {
