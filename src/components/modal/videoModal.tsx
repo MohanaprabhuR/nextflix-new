@@ -103,7 +103,7 @@ export default function VideoModal({ isOpen, showId }) {
                   </svg>
                 </button>
 
-                <div className="w-full h-[576px] relative bg-black rounded-t-2xl">
+                <div className="w-full h-[576px]  relative bg-black rounded-t-2xl max-lg:width-[90%] max-lg:h-auto aspect-video ">
                   {error && (
                     <div className="text-center text-red-500 pt-24">
                       {error}
