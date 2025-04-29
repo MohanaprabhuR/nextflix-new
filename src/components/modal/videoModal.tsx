@@ -128,6 +128,9 @@ export default function VideoModal({ isOpen, showId }) {
                       light={video.poster}
                       width="100%"
                       height="100%"
+                      style={{
+                        objectFit: "cover",
+                      }}
                     />
                   )}
                 </div>

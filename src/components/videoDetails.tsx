@@ -71,6 +71,9 @@ export default function VideoDetails({ isOpen, showId }) {
                 playing={playing}
                 light={video?.poster}
                 onClickPreview={() => setPlaying(true)}
+                style={{
+                  objectFit: "cover",
+                }}
               />
             </div>
           ) : (
