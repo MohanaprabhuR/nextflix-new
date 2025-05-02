@@ -54,7 +54,7 @@ export default function VideoDetails({ isOpen, showId }) {
           />
           <div className="absolute inset-0 bg-black/70 backdrop-blur-xl z-[1]" />
         </div>
-        <div className="relative w-[1008px] h-[567px] max-lg:width-[90%] max-lg:h-auto aspect-video z-[2] ">
+        <div className="relative w-[1008px] h-[567px] max-lg:width-[90%] max-lg:h-auto aspect-video z-[2] px-4">
           {error && <p className="text-red-500">{error}</p>}
           {video ? (
             <div className="relative w-full h-full">
