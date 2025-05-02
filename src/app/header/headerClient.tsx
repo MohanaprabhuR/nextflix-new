@@ -267,10 +267,14 @@ export default function HeaderClient({
         }`}
       >
         <div
-          className={`absolute top-0 left-0 w-full h-screen backdrop-saturate-[180%] backdrop-blur-[5px] bg-[rgba(255,255,255)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          className={`absolute top-0 left-0 w-full h-screen backdrop-saturate-[180%] backdrop-blur-[5px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
             isMobileMenuOpen
               ? "translate-y-0 opacity-100"
               : "-translate-y-[120%] opacity-0"
+          } ${
+            isVideoPage
+              ? "bg-black/70 backdrop-blur-xl "
+              : "bg-[rgba(255,255,255,0.8)]"
           }`}
         >
           <ul className="flex flex-col">
