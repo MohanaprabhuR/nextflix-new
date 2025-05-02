@@ -291,7 +291,7 @@ export default function HeaderClient({
                   style={{
                     transitionDelay: isMobileMenuOpen
                       ? `${index * 30}ms`
-                      : `${(allGenres.length - index - 1) * 30}ms`,
+                      : `${(allGenres.length - index - 1) * 20}ms`,
                   }}
                 >
                   <Link
