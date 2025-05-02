@@ -44,7 +44,7 @@ const ShowList: React.FC<ShowListProps> = ({ show }) => {
           />
         </div>
       </Link>
-      <div className="pt-4 flex flex-col gap-[0_9px]">
+      <div className="pt-4 flex flex-col gap-[0_8px]">
         <h5 className="text-gray-500 text-sm font-normal">
           {show.release_year}
         </h5>
