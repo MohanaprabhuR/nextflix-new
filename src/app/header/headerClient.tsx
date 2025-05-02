@@ -3,7 +3,7 @@ import { useQueries } from "@tanstack/react-query";
 import { fetchGenres } from "@/utils/fetchData";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Genre {
   id: number;
@@ -14,6 +14,28 @@ interface ApiResponse {
   genres: { data: Genre[] };
 }
 
+// Custom hook for window resize
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowSize;
+};
+
 export default function HeaderClient({
   initialData,
 }: {
@@ -22,14 +44,38 @@ export default function HeaderClient({
   const pathname = usePathname();
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { width } = useWindowSize();
 
   const allGenres: Genre[] = initialData.genres.data;
-  const initialVisible = allGenres.slice(0, 6);
+  const isMobile = width < 640;
+
+  // Determine number of visible genres based on screen width
+  const getVisibleCount = () => {
+    if (width >= 1024) return 8;
+    if (width >= 768) return 6;
+    if (width >= 640) return 5;
+    return 3;
+  };
+
+  const visibleCount = getVisibleCount();
+  const initialVisible = allGenres.slice(0, visibleCount);
   const initialVisibleIds = new Set(initialVisible.map((g) => g.id));
   const initialMore = allGenres.filter((g) => !initialVisibleIds.has(g.id));
 
   const [visibleGenres, setVisibleGenres] = useState<Genre[]>(initialVisible);
   const [moreGenres, setMoreGenres] = useState<Genre[]>(initialMore);
+
+  // Update visible genres when window size changes
+  useEffect(() => {
+    const newVisibleCount = getVisibleCount();
+    const newVisible = allGenres.slice(0, newVisibleCount);
+    const newVisibleIds = new Set(newVisible.map((g) => g.id));
+    const newMore = allGenres.filter((g) => !newVisibleIds.has(g.id));
+
+    setVisibleGenres(newVisible);
+    setMoreGenres(newMore);
+  }, [width, allGenres]);
 
   const [genresQuery] = useQueries({
     queries: [
@@ -42,7 +88,6 @@ export default function HeaderClient({
     ],
   });
 
-  const genres: Genre[] = genresQuery.data?.data || [];
   const isLoading: boolean = genresQuery.isLoading;
   const isError: boolean = genresQuery.isError;
 
@@ -74,12 +119,17 @@ export default function HeaderClient({
     router.push(`/genres/${genre.id}`);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+    setIsDropdownOpen(false);
+  };
+
   return (
     <header
       className={`pt-4 pb-5 fixed top-0 z-50 w-full header transition-all ease-in-out backdrop-saturate-[180%] backdrop-blur-[5px] 
       ${isVideoPage ? "bg-[rgba(0,0,0,0.1)]" : "bg-[rgba(255,255,255,0.8)]"}`}
     >
-      <div className="w-full max-w-[1332px] mx-auto px-4 flex items-center justify-between relative z-10">
+      <div className="w-full max-w-[1332px] mx-auto px-4 flex items-center justify-between relative z-20">
         <div className="flex items-center gap-5">
           <Link href="/">
             <figure className="w-5 h-5">
@@ -98,7 +148,7 @@ export default function HeaderClient({
             </figure>
           </Link>
           <div>
-            <ul className="flex items-center gap-4">
+            <ul className="flex items-center gap-4 max-sm:hidden">
               {visibleGenres.map((genre) => {
                 const isActive = pathname === `/genres/${genre.id}`;
                 return (
@@ -156,7 +206,7 @@ export default function HeaderClient({
             </ul>
           </div>
         </div>
-        <div>
+        <div className="flex items-center gap-2">
           <Link href="/search">
             <figure className="w-[18px] h-[18px]">
               <svg
@@ -176,6 +226,87 @@ export default function HeaderClient({
               </svg>
             </figure>
           </Link>
+          {isMobile && (
+            <button
+              onClick={toggleMobileMenu}
+              className="p-0"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke={isVideoPage ? "#ffffff" : "#8C8C8C"}
+                strokeOpacity={isVideoPage ? 0.52 : 1}
+                viewBox="0 0 24 24"
+              >
+                {isMobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          )}
+        </div>
+      </div>
+      <div
+        className={`fixed inset-0 top-[60px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${
+          isMobileMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div
+          className={`absolute top-0 left-0 w-full h-screen backdrop-saturate-[180%] backdrop-blur-[5px] bg-[rgba(255,255,255)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+            isMobileMenuOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-[120%] opacity-0"
+          }`}
+        >
+          <ul className="flex flex-col">
+            {allGenres.map((genre, index) => {
+              const isActive = pathname === `/genres/${genre.id}`;
+              return (
+                <li
+                  key={genre.id}
+                  className={`transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                    isMobileMenuOpen
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 -translate-y-8 pointer-events-none"
+                  }`}
+                  style={{
+                    transitionDelay: isMobileMenuOpen
+                      ? `${index * 30}ms`
+                      : `${(allGenres.length - index - 1) * 20}ms`,
+                  }}
+                >
+                  <Link
+                    href={`/genres/${genre.id}`}
+                    className={`block px-4 py-3 text-sm font-normal leading-[100%] tracking-[0.14px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                      isVideoPage
+                        ? "text-white/50 hover:text-white"
+                        : isActive
+                        ? "text-black hover:text-black"
+                        : "text-[rgba(0,0,0,0.43)] hover:text-black"
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {genre.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </header>
