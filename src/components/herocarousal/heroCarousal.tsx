@@ -34,7 +34,7 @@ const HeroCarousel: React.FC<CarouselProps> = ({ heroCarousel }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoaded(true);
-    }, 300);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);

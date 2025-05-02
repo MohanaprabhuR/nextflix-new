@@ -67,7 +67,7 @@ export default function PosterImage({
         width={width}
         height={height}
         onLoad={() => setLoaded(true)}
-        className={`w-full h-full object-cover transition-opacity duration-700 ${
+        className={`w-full h-full object-cover ${
           loaded ? "opacity-100 shadow-xl" : "opacity-0"
         } ${className}`}
         priority

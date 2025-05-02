@@ -93,6 +93,14 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
     [Autoplay({ delay: 3000, stopOnInteraction: false }), Fade()]
   );
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const { data, isLoading } = useQuery<ApiResponse, Error>({
     queryKey: ["shows", id],
     queryFn: async (): Promise<ApiResponse> => {
