@@ -96,7 +96,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 2000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
