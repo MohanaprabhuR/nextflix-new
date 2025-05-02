@@ -231,8 +231,8 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                     width={1920}
                     height={500}
                     layout="responsive"
-                    className={`w-full h-[500px] object-cover object-center  ${
-                      isLoaded ? "opacity-100" : "opacity-0"
+                    className={`w-full h-[500px] object-cover object-center transform transition-transform ease-in-out duration-700  ${
+                      isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-105"
                     }`}
                   />
 

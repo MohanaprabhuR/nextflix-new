@@ -29,6 +29,15 @@ interface CarouselProps {
 const HeroCarousel: React.FC<CarouselProps> = ({ heroCarousel }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const autoplayOptions = {
     delay: 3000,
@@ -97,8 +106,10 @@ const HeroCarousel: React.FC<CarouselProps> = ({ heroCarousel }) => {
                     width={1300}
                     height={734}
                     alt={carousel.name}
-                    className="object-cover"
                     layout="responsive"
+                    className={`object-cover transform transition-all ease-out duration-500 ${
+                      loaded ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                    }`}
                   />
                 </figure>
 
