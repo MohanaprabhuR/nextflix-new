@@ -66,7 +66,7 @@ export default function CategoryClient({
           return matchedShow ? (
             <div
               key={matchedShow.id}
-              className="w-full max-w-[200px] max-sm:max-w-[45%]"
+              className="w-full max-w-[200px] max-sm:max-w-[45%] "
             >
               <Showlist show={matchedShow} />
             </div>

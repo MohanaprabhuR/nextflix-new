@@ -21,7 +21,7 @@ const ShowList: React.FC<ShowListProps> = ({ show }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
-        setSize({ width: 155, height: 225 });
+        setSize({ width: 200, height: 250 });
       } else {
         setSize({ width: 200, height: 300 });
       }
