@@ -37,6 +37,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tanstack/eslint-plugin-query": "^5.66.1",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/qs": "^6.9.18",
     "@types/react": "^19",
