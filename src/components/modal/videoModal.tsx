@@ -210,7 +210,7 @@ export default function VideoModal({ isOpen, showId }) {
             }`}
             ref={emblaRef}
           >
-            <div className="embla__container flex gap-[0_36px] is-draggable">
+            <div className="embla__container flex gap-[0_36px] is-draggable max-sm:gap-[0_16px]">
               {videolist.map((video, index) => (
                 <Link
                   href={`/shows/${showId}/videos/${video.id}`}
