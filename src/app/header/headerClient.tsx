@@ -66,6 +66,7 @@ export default function HeaderClient({
   const [visibleGenres, setVisibleGenres] = useState<Genre[]>(initialVisible);
   const [moreGenres, setMoreGenres] = useState<Genre[]>(initialMore);
 
+  // Update visible genres when window size changes
   useEffect(() => {
     const newVisibleCount = getVisibleCount();
     const newVisible = allGenres.slice(0, newVisibleCount);
@@ -74,7 +75,8 @@ export default function HeaderClient({
 
     setVisibleGenres(newVisible);
     setMoreGenres(newMore);
-  }, [width, allGenres, getVisibleCount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, allGenres]);
 
   const [genresQuery] = useQueries({
     queries: [
