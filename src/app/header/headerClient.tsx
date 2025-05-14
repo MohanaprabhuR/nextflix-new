@@ -66,7 +66,6 @@ export default function HeaderClient({
   const [visibleGenres, setVisibleGenres] = useState<Genre[]>(initialVisible);
   const [moreGenres, setMoreGenres] = useState<Genre[]>(initialMore);
 
-  // Update visible genres when window size changes
   useEffect(() => {
     const newVisibleCount = getVisibleCount();
     const newVisible = allGenres.slice(0, newVisibleCount);
@@ -75,7 +74,7 @@ export default function HeaderClient({
 
     setVisibleGenres(newVisible);
     setMoreGenres(newMore);
-  }, [width, allGenres]);
+  }, [width, allGenres, getVisibleCount]);
 
   const [genresQuery] = useQueries({
     queries: [

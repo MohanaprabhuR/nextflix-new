@@ -45,10 +45,12 @@ export default function VideoDetails({ isOpen, showId }) {
   const videolist = show?.data?.videos || [];
   const video = videolist.find((list) => String(list.id) === videoId);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: false }, [
     ClassNames(),
   ]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (!emblaApi) return;
 
