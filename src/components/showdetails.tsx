@@ -80,6 +80,7 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
     };
   }, [emblaApi, onInit, onSelect]);
 
+  //Grouping Videos by Season
   const groupedVideos = useMemo(
     () => _.groupBy(show?.videos, "season"),
     [show?.videos]
@@ -88,6 +89,13 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
     () => _.sortBy(Object.keys(groupedVideos)),
     [groupedVideos]
   );
+
+  //Getting Fits First Video Id
+  const firstVideoId = useMemo(() => {
+    const firstSeason = Object.keys(groupedVideos)[0];
+    const firstVideo = groupedVideos[firstSeason]?.[0];
+    return firstVideo?.id;
+  }, [groupedVideos]);
 
   useMemo(() => {
     if (seasons.length > 0) setSelectedSeason(seasons[0]);
@@ -130,7 +138,13 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                 {show?.description}
               </p>
             </div>
-            <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4 max-sm:w-full max-sm:justify-center ">
+            <Link
+              href={`/shows/${show.id}/videos/${firstVideoId}`}
+              as={`/shows/${show.id}/videos/${firstVideoId}`}
+              scroll={false}
+              prefetch={false}
+              className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4 max-sm:w-full max-sm:justify-center "
+            >
               <figure>
                 <svg
                   width="12"
@@ -146,7 +160,7 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                 </svg>
               </figure>
               Watch Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>

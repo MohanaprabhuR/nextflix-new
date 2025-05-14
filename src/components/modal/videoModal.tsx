@@ -47,7 +47,6 @@ export default function VideoModal({ isOpen, showId }) {
   }, [showId]);
 
   const video = show?.data?.videos?.find((v) => String(v.id) === videoId);
-
   const videolist = show?.data?.videos || [];
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: false }, [

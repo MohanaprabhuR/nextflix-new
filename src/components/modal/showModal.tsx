@@ -118,6 +118,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
   });
   const fetchshow = data?.shows?.data;
 
+  //Grouping Videos by Season
   const groupedVideos = useMemo(() => {
     return _.groupBy(fetchshow?.videos ?? [], "season");
   }, [fetchshow?.videos]);
@@ -126,6 +127,14 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
     [groupedVideos]
   );
 
+  //Getting Fits First Video Id
+  const firstVideoId = useMemo(() => {
+    const firstSeason = Object.keys(groupedVideos)[0];
+    const firstVideo = groupedVideos[firstSeason]?.[0];
+    return firstVideo?.id;
+  }, [groupedVideos]);
+
+  console.log("firstVideoId", firstVideoId);
   useEffect(() => {
     if (seasons.length > 0) setSelectedSeason(seasons[0]);
   }, [seasons]);
@@ -301,7 +310,13 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                           />
                         </div>
                       ) : (
-                        <button className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4 max-sm:w-full max-sm:justify-center">
+                        <Link
+                          href={`/shows/${id}/videos/${firstVideoId}`}
+                          as={`/shows/${id}/videos/${firstVideoId}`}
+                          scroll={false}
+                          prefetch={false}
+                          className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4 max-sm:w-full max-sm:justify-center"
+                        >
                           <figure>
                             <svg
                               width="12"
@@ -317,7 +332,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                             </svg>
                           </figure>
                           Watch Now
-                        </button>
+                        </Link>
                       )}
                     </div>
                   </div>
