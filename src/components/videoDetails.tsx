@@ -7,6 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
 import _ from "lodash";
+import PosterImage from "@/components/imageBlurHash";
 
 export default function VideoDetails({ isOpen, showId }) {
   const [playing, setPlaying] = useState(false);
@@ -47,6 +48,8 @@ export default function VideoDetails({ isOpen, showId }) {
   const videolist = show?.data?.videos || [];
   const video = videolist.find((list) => String(list.id) === videoId);
   const groupedVideos = _.groupBy(show?.data?.videos || [], "season");
+
+  console.log("groupedVideos", groupedVideos);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: false }, [
@@ -187,12 +190,13 @@ export default function VideoDetails({ isOpen, showId }) {
                         )}
                       </div>
                       <div className="relative">
-                        <Image
+                        <PosterImage
                           src={video.poster}
                           alt={video.name}
                           width={295}
                           height={183}
                           className="object-cover rounded-[5px]"
+                          hash={video.video_poster_hash}
                         />
                       </div>
                     </Link>

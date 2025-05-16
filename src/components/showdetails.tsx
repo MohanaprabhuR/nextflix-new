@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import _ from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -213,19 +212,22 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                       prefetch={false}
                     >
                       <div className="relative flex items-center justify-center">
-                        <Image
-                          src={
-                            video.poster ||
-                            "/video-poster-placeholder-image.jpg"
-                          }
-                          alt={video.name}
-                          width={296}
-                          height={173}
-                          className={`object-cover rounded-xl  group-hover:scale-[1.03] delay-100 transition-all duration-200 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
-                            isLoaded ? "opacity-100" : "opacity-0"
-                          }`}
-                          onLoad={() => setIsLoaded(true)}
-                        />
+                        <div className="rounded-xl  overflow-hidden ">
+                          <PosterImage
+                            src={
+                              video.poster ||
+                              "/video-poster-placeholder-image.jpg "
+                            }
+                            alt={`${video.name} - Episode thumbnail`}
+                            hash={video.video_poster_hash}
+                            width={296}
+                            height={173}
+                            className={`object-cover  group-hover:scale-[1.03] delay-100 transition-all duration-300 ease-in-out group-hover:shadow-[0px_25px_44.7px_-10px_rgba(0,0,0,0.25)] ${
+                              isLoaded ? "opacity-100" : "opacity-0"
+                            }`}
+                            onLoad={() => setIsLoaded(true)}
+                          />
+                        </div>
                         <div className="absolute duration-200 delay-100 transition-all ease-in-out  opacity-0 group-hover:opacity-100   w-12 flex items-center justify-center h-12 bg-[rgba(255,255,255,0.31)] shadow-[0px_5px_21px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px] rounded-[77px]">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

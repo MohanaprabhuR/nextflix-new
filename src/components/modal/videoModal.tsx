@@ -10,6 +10,7 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import _ from "lodash";
+import PosterImage from "@/components/imageBlurHash";
 
 export default function VideoModal({ isOpen, showId }) {
   const [playing, setPlaying] = useState(false);
@@ -241,12 +242,13 @@ export default function VideoModal({ isOpen, showId }) {
                         )}
                       </div>
                       <div className="relative">
-                        <Image
+                        <PosterImage
                           src={video.poster}
                           alt={video.name}
                           width={295}
                           height={183}
                           className="object-cover rounded-[5px]"
+                          hash={video.video_poster_hash}
                         />
                       </div>
                     </Link>
