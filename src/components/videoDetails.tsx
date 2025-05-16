@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ReactPlayer from "react-player";
@@ -5,6 +6,7 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Link from "next/link";
+import _ from "lodash";
 
 export default function VideoDetails({ isOpen, showId }) {
   const [playing, setPlaying] = useState(false);
@@ -44,6 +46,7 @@ export default function VideoDetails({ isOpen, showId }) {
 
   const videolist = show?.data?.videos || [];
   const video = videolist.find((list) => String(list.id) === videoId);
+  const groupedVideos = _.groupBy(show?.data?.videos || [], "season");
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: false }, [
@@ -145,52 +148,59 @@ export default function VideoDetails({ isOpen, showId }) {
           </span>
         </div>
 
-        <div className="embla  overflow-hidden relative">
-          <div
-            className={`embla__viewport transition-all duration-500 ease-in-out overflow-hidden px-4 relative ${
-              showEpisodes ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
-            }`}
-            ref={emblaRef}
-          >
-            <div className="embla__container flex gap-[0_36px] is-draggable max-sm:gap-[0_16px]">
-              {videolist.map((video, index) => (
-                <Link
-                  href={`/shows/${showId}/videos/${video.id}`}
-                  key={index}
-                  className="w-full max-w-[296px] flex-none max-sm:max-w-[220px] relative"
-                >
-                  <div className="flex justify-between mb-1 items-center">
-                    <div className="flex items-center gap-1">
-                      <h2 className="text-white/50 text-base font-medium ">
-                        {index + 1}
-                      </h2>
-
-                      <h2 className="text-white text-base font-regular truncate whitespace-nowrap overflow-hidden max-w-[150px]">
-                        {video.name}
-                      </h2>
-                    </div>
-                    {String(video.id) === videoId && (
-                      <div className="flex h-5 shrink-0 items-center justify-center rounded-[15px] bg-[#ECB03F] px-2">
-                        <span className="text-right text-sm font-[430] leading-[140%] tracking-[0.025em] text-black">
-                          Now Playing
-                        </span>
+        {Object.entries(groupedVideos)
+          .filter(([_, episodes]) =>
+            episodes.some((v) => String(v.id) === videoId)
+          )
+          .map(([season, episodes]) => (
+            <div key={season} className="embla overflow-hidden relative mt-6">
+              <div
+                className={`embla__viewport transition-all duration-500 ease-in-out overflow-hidden px-4 relative ${
+                  showEpisodes
+                    ? "max-h-[800px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+                ref={emblaRef}
+              >
+                <div className="embla__container flex gap-[0_36px] is-draggable max-sm:gap-[0_16px]">
+                  {episodes.map((video, index) => (
+                    <Link
+                      href={`/shows/${showId}/videos/${video.id}`}
+                      key={video.id}
+                      className="w-full max-w-[296px] flex-none max-sm:max-w-[220px] relative"
+                    >
+                      <div className="flex justify-between mb-1 items-center">
+                        <div className="flex items-center gap-1">
+                          <h2 className="text-white/50 text-base font-medium">
+                            {index + 1}
+                          </h2>
+                          <h2 className="text-white text-base font-regular truncate whitespace-nowrap overflow-hidden max-w-[150px]">
+                            {video.name}
+                          </h2>
+                        </div>
+                        {String(video.id) === videoId && (
+                          <div className="flex h-5 shrink-0 items-center justify-center rounded-[15px] bg-[#ECB03F] px-2">
+                            <span className="text-right text-sm font-[430] leading-[140%] tracking-[0.025em] text-black">
+                              Now Playing
+                            </span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <Image
-                      src={video.poster}
-                      alt={video.name}
-                      width={295}
-                      height={183}
-                      className="object-cover rounded-[5px]"
-                    />
-                  </div>
-                </Link>
-              ))}
+                      <div className="relative">
+                        <Image
+                          src={video.poster}
+                          alt={video.name}
+                          width={295}
+                          height={183}
+                          className="object-cover rounded-[5px]"
+                        />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          ))}
       </div>
     </div>
   );
