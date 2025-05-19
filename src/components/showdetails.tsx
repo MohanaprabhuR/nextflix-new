@@ -216,7 +216,7 @@ export default function ShowDetails({ show }: ShowDetailsProps) {
                           <PosterImage
                             src={
                               video.poster ||
-                              "/video-poster-placeholder-image.jpg "
+                              "/video-poster-placeholder-image.jpg"
                             }
                             alt={`${video.name} - Episode thumbnail`}
                             hash={video.video_poster_hash}
