@@ -62,7 +62,7 @@ export default function PosterImage({
         aria-hidden
       />
       <Image
-        src={src}
+        src={src || "/video-poster-placeholder-image.jpg"}
         alt={alt}
         width={width}
         height={height}
