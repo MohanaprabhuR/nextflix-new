@@ -50,6 +50,13 @@ export default function HeaderClient({
   const allGenres: Genre[] = initialData.genres.data;
   const isMobile = width < 640;
 
+  // Automatically close mobile menu when resizing to desktop
+  useEffect(() => {
+    if (width >= 640 && isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  }, [width, isMobileMenuOpen]);
+
   // Determine number of visible genres based on screen width
   const getVisibleCount = () => {
     if (width >= 1024) return 8;
@@ -101,6 +108,7 @@ export default function HeaderClient({
       <div className="text-red-500 text-center mt-20">Error loading data.</div>
     );
   }
+
   const isVideoPage = pathname.includes("/videos/");
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
   const handleGenreClick = (genre: Genre) => {
@@ -261,14 +269,14 @@ export default function HeaderClient({
         </div>
       </div>
       <div
-        className={`fixed inset-0 top-[60px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${
+        className={`fixed inset-0 top-[60px]   ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${
           isMobileMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
         <div
-          className={`absolute top-0 left-0 w-full h-screen backdrop-saturate-[180%] backdrop-blur-[5px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          className={`absolute top-0 left-0 w-full h-screen backdrop-saturate-[180%] backdrop-blur-[10px] bg-white/95  ease-[cubic-bezier(0.4,0,0.2,1)] ${
             isMobileMenuOpen
               ? "translate-y-0 opacity-100"
               : "-translate-y-[120%] opacity-0"
@@ -284,7 +292,7 @@ export default function HeaderClient({
               return (
                 <li
                   key={genre.id}
-                  className={`transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                  className={`transition-all duration-300 delay-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                     isMobileMenuOpen
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 -translate-y-8 pointer-events-none"
