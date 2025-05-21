@@ -30,7 +30,7 @@ interface Genre {
   name: string;
 }
 interface ApiResponse {
-  shows: any;
+  shows: unknown;
   genres: { data: Genre[] };
 }
 
