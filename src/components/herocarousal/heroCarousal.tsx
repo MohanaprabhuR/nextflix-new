@@ -113,22 +113,23 @@ const HeroCarousel: React.FC<CarouselProps> = ({ heroCarousel }) => {
                   />
                 </figure>
 
-                <div className="px-[48px] pb-6 pt-20 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)]  absolute bottom-0 left-0 w-full max-lg:px-4 max-lg:py-6 max-md:relative">
+                <div className="px-[48px] z-50 pb-6 pt-20 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_1.89%,rgba(0,0,0,0.03)_121.51%)]  absolute bottom-0 left-0 w-full max-lg:px-4 max-lg:py-6 max-md:relative">
                   <div className="product-header__blur"></div>
                   <div className="w-full max-w-3xl z-10 relative">
                     <h2 className="text-white text-2xl font-semibold leading-[115%] pb-4 max-md:text-black">
                       {carousel.name}
                     </h2>
-                    <ul className="flex gap-[0_8px] pb-2">
+                    <div className="flex gap-[0_8px] pb-2">
                       {carousel.genres.map((genre) => (
-                        <li
+                        <Link
+                          href={`/genres/${genre.id}`}
                           key={genre.id}
                           className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer max-md:text-black"
                         >
                           {genre.name}
-                        </li>
+                        </Link>
                       ))}
-                    </ul>
+                    </div>
                     <p className="text-white text-sm font-normal leading-[150%] tracking-[0.14px] pb-4 max-md:text-black">
                       {carousel.description}
                     </p>

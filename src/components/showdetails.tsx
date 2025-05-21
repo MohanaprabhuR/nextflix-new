@@ -144,7 +144,7 @@ export default function ShowDetails({ show, initialData }: ShowDetailsProps) {
           width={1920}
           height={500}
           layout="responsive"
-          className={`w-full h-[500px] object-cover object-center transform transition-transform ease-in-out duration-700 rounded-[16px_16px_0px_0px]  ${
+          className={`w-full h-[500px] object-cover object-center transform transition-transform ease-in-out duration-500 rounded-[16px_16px_0px_0px]   ${
             isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-105"
           }`}
         />
@@ -180,16 +180,17 @@ export default function ShowDetails({ show, initialData }: ShowDetailsProps) {
                   <p className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 max-md:text-black">
                     {fetchshow?.release_year}
                   </p>
-                  <ul className="flex gap-[0_8px] max-sm:flex-wrap max-sm:gap-2">
+                  <div className="flex gap-[0_8px] max-sm:flex-wrap max-sm:gap-2">
                     {fetchshow?.genres?.map((genre: Genre) => (
-                      <li
+                      <Link
+                        href={`/genres/${genre.id}`}
                         key={genre.id}
                         className="text-white text-[13px] font-semibold leading-[100%] tracking-[0.13px] opacity-80 hover:underline cursor-pointer max-md:text-black"
                       >
                         {genre?.name}
-                      </li>
+                      </Link>
                     ))}
-                  </ul>
+                  </div>
                 </div>
                 <p className="text-white text-[15px] font-normal leading-[150%] tracking-[0.15px] max-md:text-black">
                   {fetchshow?.description}
