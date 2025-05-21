@@ -33,7 +33,7 @@ const ShowList: React.FC<ShowListProps> = ({ show }) => {
   }, []);
   return (
     <>
-      <Link href={`/shows/${show.id}`} scroll={false}>
+      <Link href={`/shows/${show.id}`} scroll={true}>
         <div className="relative">
           <PosterImage
             src={show.poster?.src || "/video-poster-placeholder-image.jpg"}

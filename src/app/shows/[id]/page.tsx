@@ -16,9 +16,12 @@ export default async function Page(props: { params: Params }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showReact = await dataReat.json();
 
+  const bannerDetails = show?.data?.banner;
+  console.log("shows", bannerDetails);
+
   return (
     <div className="bg-[rgba(255,255,255,0.86)] backdrop-blur-[100px] ">
-      <Showdetails show={show.data} />
+      <Showdetails show={bannerDetails} />
     </div>
   );
 }

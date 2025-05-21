@@ -312,7 +312,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                         <Link
                           href={`/shows/${id}/videos/${firstVideoId}`}
                           as={`/shows/${id}/videos/${firstVideoId}`}
-                          scroll={false}
+                          scroll={true}
                           prefetch={false}
                           className="bg-white hover:-translate-y-[2px] delay-200 transition-all ease-in-out gap-[0_8px] flex items-center outline-none rounded-[10px] text-black text-[13px] font-semibold leading-[100%] tracking-[0.13px] px-[60px] py-4 max-sm:w-full max-sm:justify-center"
                         >
@@ -412,7 +412,7 @@ export default function ShowModal({ show, initialData }: ShowModalProps) {
                                   <Link
                                     href={`/shows/${id}/videos/${video.id}`}
                                     as={`/shows/${id}/videos/${video.id}`}
-                                    scroll={false}
+                                    scroll={true}
                                     prefetch={false}
                                   >
                                     <div className="relative flex items-center justify-center">

@@ -46,7 +46,7 @@ const ShowCarousal: React.FC<ShowCarousalProps> = ({ shows }) => {
                 key={show.id}
                 href={`/shows/${show.id}`}
                 className="embla__slide"
-                scroll={false}
+                scroll={true}
               >
                 <figure className="size-full min-w-[200px] max-sm:min-w-[150px]">
                   <PosterImage
